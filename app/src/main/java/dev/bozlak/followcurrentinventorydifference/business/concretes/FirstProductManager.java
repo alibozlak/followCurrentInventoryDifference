@@ -6,6 +6,7 @@ import dev.bozlak.followcurrentinventorydifference.business.abstracts.ProductSer
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.EventAffectingInventoryDao;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.GeneralInventoryDateDao;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.ProductDao;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.Product;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductIdPriceTaxInventoryDifferenceDate;
 
 public class FirstProductManager implements ProductService {
@@ -35,7 +36,7 @@ public class FirstProductManager implements ProductService {
 
     @Override
     public double getSummaryCurrentInventoryDifferencePrice() {
-        String lastGeneralInventoryDate = this.generalInventoryDateDao.getLastGeneralInventoryDate();
+        long lastGeneralInventoryDate = this.generalInventoryDateDao.getLastGeneralInventoryDate();
         List<ProductIdPriceTaxInventoryDifferenceDate> productIdPriceTaxInventoryDifferenceDateList
                 = this.productDao.getProductIdPriceTaxInventoryDifferenceDates(lastGeneralInventoryDate);
         double summaryCurrentInventoryDifferencePrice = 0;
@@ -44,7 +45,7 @@ public class FirstProductManager implements ProductService {
             double productCurrentPrice = productDto.getCurrentPrice();
             byte tax = productDto.getTax();
             double productCurrentInventoryDifference = productDto.getInventoryDifference();
-            String lastProductInventoryDate = productDto.getLastProductInventoryDate();
+            long lastProductInventoryDate = productDto.getLastProductInventoryDate();
 
             double sumOfAmountFromLastProductInventoryDate
                     = this.eventAffectingInventoryDao.getSumOfEventAmountGivenProductIdAndLastProductInventory(
@@ -52,11 +53,17 @@ public class FirstProductManager implements ProductService {
                     );
             double totalProductCurrentInventoryDifference
                     = productCurrentInventoryDifference + sumOfAmountFromLastProductInventoryDate;
-            double productInventoryPrice = productCurrentPrice * (1 - tax/100.0);
+            double productInventoryPriceUnedited = productCurrentPrice * (1 - tax/100.0);
+            double productInventoryPrice = Math.round(productInventoryPriceUnedited * 100.0) / 100.0;
             double productInventoryDifferencePrice
                     = totalProductCurrentInventoryDifference * productInventoryPrice;
             summaryCurrentInventoryDifferencePrice += productInventoryDifferencePrice;
         }
         return summaryCurrentInventoryDifferencePrice;
+    }
+
+    @Override
+    public boolean addProduct(Product product) {
+        return this.productDao.addProduct(product);
     }
 }

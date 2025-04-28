@@ -3,11 +3,11 @@ package dev.bozlak.followcurrentinventorydifference.dao.concretes;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import dev.bozlak.followcurrentinventorydifference.dao.DbConstants;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.ProductDao;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.Product;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductIdPriceTaxInventoryDifferenceDate;
 
 public class FirstProductDao implements ProductDao {
@@ -24,7 +24,7 @@ public class FirstProductDao implements ProductDao {
 
     @Override
     public List<ProductIdPriceTaxInventoryDifferenceDate> getProductIdPriceTaxInventoryDifferenceDates(
-            String lastGeneralInventoryDate
+            long lastGeneralInventoryDate
     ) {
         List<ProductIdPriceTaxInventoryDifferenceDate> productIdPriceTaxInventoryDifferenceAndDates
                 = new ArrayList<>();
@@ -45,7 +45,7 @@ public class FirstProductDao implements ProductDao {
                     double currentPrice = cursor.getDouble(1);
                     byte tax = (byte) cursor.getShort(2);
                     double inventoryDifference = cursor.getDouble(3);
-                    String lastProductInventoryDate = cursor.getString(4);
+                    long lastProductInventoryDate = cursor.getLong(4);
                     var productDto = new ProductIdPriceTaxInventoryDifferenceDate(
                             productId, currentPrice, tax, inventoryDifference, lastProductInventoryDate
                     );
@@ -57,6 +57,31 @@ public class FirstProductDao implements ProductDao {
             System.out.println(e.getMessage());
         }
         return productIdPriceTaxInventoryDifferenceAndDates;
+    }
+
+    @Override
+    public boolean addProduct(Product product) {
+        boolean result = false;
+        String sqlForAddProduct = "INSERT INTO "
+                + DbConstants.PRODUCTS_TABLE_NAME + " ("
+                + DbConstants.PRODUCT_CODE_COLUMN_NAME + ", "
+                + DbConstants.PRODUCT_PRICE_COLUMN_NAME + ", "
+                + DbConstants.PRODUCT_TAX_COLUMN_NAME + ", "
+                + DbConstants.LAST_PRODUCT_INVENTORY_DIFFERENCE_COLUMN_NAME + ", "
+                + DbConstants.LAST_PRODUCT_INVENTORY_DATE_COLUMN_NAME + ") VALUES ("
+                + product.getProductCode() + ", "
+                + product.getCurrentPrice() + ", "
+                + product.getTax() + ", "
+                + product.getInventoryDifference() + ", "
+                + product.getLastProductInventoryDate() + ");";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            System.out.println(db.isReadOnly());
+            db.execSQL(sqlForAddProduct);
+            result = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 
 

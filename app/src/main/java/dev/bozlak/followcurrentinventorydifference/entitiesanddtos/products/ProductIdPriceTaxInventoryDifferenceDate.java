@@ -5,11 +5,13 @@ public class ProductIdPriceTaxInventoryDifferenceDate {
     private double currentPrice;
     private byte tax;
     private double inventoryDifference;
-    private String lastProductInventoryDate;
+    private long lastProductInventoryDate;
+
+    public ProductIdPriceTaxInventoryDifferenceDate(){}
 
     public ProductIdPriceTaxInventoryDifferenceDate(int productId, double currentPrice,
                                                     byte tax, double inventoryDifference,
-                                                    String lastProductInventoryDate) {
+                                                    long lastProductInventoryDate) {
         this.productId = productId;
         this.currentPrice = currentPrice;
         this.tax = tax;
@@ -33,7 +35,27 @@ public class ProductIdPriceTaxInventoryDifferenceDate {
         return inventoryDifference;
     }
 
-    public String getLastProductInventoryDate() {
+    public long getLastProductInventoryDate() {
         return lastProductInventoryDate;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+
+    public void setTax(byte tax) {
+        this.tax = tax;
+    }
+
+    public void setInventoryDifference(double inventoryDifference) {
+        this.inventoryDifference = inventoryDifference;
+    }
+
+    public void setLastProductInventoryDate(long lastProductInventoryDate) {
+        this.lastProductInventoryDate = lastProductInventoryDate;
     }
 }

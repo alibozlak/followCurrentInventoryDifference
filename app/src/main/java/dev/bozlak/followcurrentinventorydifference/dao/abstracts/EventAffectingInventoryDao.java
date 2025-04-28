@@ -2,7 +2,7 @@ package dev.bozlak.followcurrentinventorydifference.dao.abstracts;
 
 public interface EventAffectingInventoryDao {
     double getSumOfEventAmountGivenProductIdAndLastProductInventory(
-            int productId, String lastProductInventoryDate
+            int productId, long lastProductInventoryDate
     );
 
 

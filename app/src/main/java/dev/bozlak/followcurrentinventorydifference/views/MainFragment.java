@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,11 +41,17 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         double summaryCurrentInventoryDifferencePrice = productService.getSummaryCurrentInventoryDifferencePrice();
         binding.tvSummaryDifferencePrice.setText(String.valueOf(summaryCurrentInventoryDifferencePrice));
+        binding.btnAddProduct.setOnClickListener(this::navigateToAddProductFragment);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void navigateToAddProductFragment(View view){
+        var action = MainFragmentDirections.mainFragmentToAddProductFragment();
+        Navigation.findNavController(view).navigate(action);
     }
 }

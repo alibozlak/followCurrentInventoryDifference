@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addProductFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".views.AddProductFragment">
+
+    <LinearLayout
+        android:id="@+id/ll_productCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_productCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ürün Kodu : " />
+
+        <EditText
+            android:id="@+id/et_productCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="7 haneli ürün kodu"
+            android:inputType="number"
+            android:maxLength="7" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_productPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/ll_productCode"
+        app:layout_constraintStart_toStartOf="@+id/ll_productCode"
+        app:layout_constraintTop_toBottomOf="@+id/ll_productCode">
+
+        <TextView
+            android:id="@+id/tv_productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Güncel Fiyatı : " />
+
+        <EditText
+            android:id="@+id/et_productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Nokta konularak kuruş ta yazılabilir"
+            android:inputType="numberDecimal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_productTax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/ll_productCode"
+        app:layout_constraintStart_toStartOf="@+id/ll_productCode"
+        app:layout_constraintTop_toBottomOf="@+id/ll_productPrice">
+
+        <TextView
+            android:id="@+id/tv_productTax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Vergisi : %" />
+
+        <EditText
+            android:id="@+id/et_productTax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="0 ie 100 arasında doğal sayı yazılmalı"
+            android:inputType="number"
+            android:maxLength="2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_productInventoryDifference"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/ll_productCode"
+        app:layout_constraintStart_toStartOf="@+id/ll_productCode"
+        app:layout_constraintTop_toBottomOf="@+id/ll_productTax">
+
+        <TextView
+            android:id="@+id/tv_productInventoryDifference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Envanter Farkı : " />
+
+        <EditText
+            android:id="@+id/et_productInventoryDifference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Son ürün envanteri farkı"
+            android:inputType="numberSigned|numberDecimal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_lastProductInventoryDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/ll_productCode"
+        app:layout_constraintStart_toStartOf="@+id/ll_productCode"
+        app:layout_constraintTop_toBottomOf="@+id/ll_productInventoryDifference">
+
+
+        <TextView
+            android:id="@+id/tv_lastProductInventorydate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Son Ürün Envanteri Tarihi : " />
+
+        <!--   <EditText
+            android:id="@+id/etd_lastProductInventoryDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="date" /> -->
+
+        <CalendarView
+            android:id="@+id/cv_lastProductInventoryDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:dateTextAppearance="@style/TextAppearance.AppCompat.Small"
+            android:weekDayTextAppearance="@style/TextAppearance.AppCompat.Small" />
+
+    </LinearLayout>
+
+  <!--  <LinearLayout
+        android:id="@+id/ll_productName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/ll_lastProductInventoryDate"
+        app:layout_constraintStart_toStartOf="@+id/ll_lastProductInventoryDate"
+        app:layout_constraintTop_toBottomOf="@+id/ll_lastProductInventoryDate">
+
+        <TextView
+            android:id="@+id/tv_productName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ürün Adı : " />
+
+        <EditText
+            android:id="@+id/et_productName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Ürün adı (isteğe bağlı)"
+            android:inputType="text" />
+
+    </LinearLayout> -->
+
+    <Button
+        android:id="@+id/btn_addProductInAddProductFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Ekle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_lastProductInventoryDate" />
+
+
+</LinearLayout>

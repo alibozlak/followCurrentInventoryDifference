@@ -19,7 +19,7 @@ public class FirstEventAffectingInventoryDao implements EventAffectingInventoryD
 
     @Override
     public double getSumOfEventAmountGivenProductIdAndLastProductInventory
-            (int productId, String lastProductInventoryDate) {
+            (int productId, long lastProductInventoryDate) {
         double sumOfEventAmount = 0;
         String sqlForSumOfEventAmount = "SELECT SUM("
                 + DbConstants.AMOUNT_COLUMN_NAME + ") FROM "

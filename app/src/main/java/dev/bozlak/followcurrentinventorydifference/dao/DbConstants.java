@@ -4,7 +4,7 @@ import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.Sale
 
 public final class DbConstants {
     public static final String DB_NAME = "inventory";
-    public static final String DB_PATH = "/data/data/dev.bozlak.followcurrentinventorydifference/databases/inventory";
+    public static final String DB_PATH = "/data/user/0/dev.bozlak.followcurrentinventorydifference/databases/inventory";
 
     public static final String PRODUCTS_TABLE_NAME = "products";
     public static final String PRODUCT_ID_COLUMN_NAME = "product_id";

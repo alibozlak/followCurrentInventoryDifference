@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 + DbConstants.PRODUCT_PRICE_COLUMN_NAME + " REAL, "
                 + DbConstants.PRODUCT_TAX_COLUMN_NAME + " INTEGER, "
                 + DbConstants.LAST_PRODUCT_INVENTORY_DIFFERENCE_COLUMN_NAME + " REAL, "
-                + DbConstants.LAST_PRODUCT_INVENTORY_DATE_COLUMN_NAME + " TEXT, "
+                + DbConstants.LAST_PRODUCT_INVENTORY_DATE_COLUMN_NAME + " INTEGER, "
                 + DbConstants.SALES_UNIT_TYPE_COLUMN_NAME + " TEXT, "
                 + DbConstants.PRODUCT_NAME_COLUMN_NAME + " TEXT, "
                 + DbConstants.PRODUCT_CODE_COLUMN_NAME + " TEXT, "
@@ -49,18 +49,19 @@ public class MainActivity extends AppCompatActivity {
                 + DbConstants.EVENT_ID_COLUMN_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + DbConstants.PRODUCT_ID_COLUMN_NAME + " INTEGER, "
                 + DbConstants.AMOUNT_COLUMN_NAME + " REAL, "
-                + DbConstants.EVENT_DATE_AND_TIME_COLUMN_NAME + " TEXT"
+                + DbConstants.EVENT_DATE_AND_TIME_COLUMN_NAME + " INTEGER"
                 + ");";
         String sqlForCreateGeneralInventoryDatesTable = "CREATE TABLE IF NOT EXISTS "
                 + DbConstants.GENERAL_INVENTORY_DATES_TABLE_NAME + " ("
                 + DbConstants.GENERAL_INVENTORY_ID_COLUMN_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + DbConstants.GENERAL_INVENTORY_DATE_AND_TIME_COLUMN_NAME + " TEXT"
+                + DbConstants.GENERAL_INVENTORY_DATE_AND_TIME_COLUMN_NAME + " INTEGER"
                 + ");";
 
         try (SQLiteDatabase db = openOrCreateDatabase(DbConstants.DB_NAME, MODE_PRIVATE, null)){
             db.execSQL(sqlForCreateProductsTable);
             db.execSQL(sqlForCreateEventsAffectingInventoryTable);
             db.execSQL(sqlForCreateGeneralInventoryDatesTable);
+            //System.out.println(db.getPath());
             //db.close();
         }
     }

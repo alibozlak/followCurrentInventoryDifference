@@ -18,8 +18,8 @@ public class FirstGeneralInventoryDateDao implements GeneralInventoryDateDao {
     }
 
     @Override
-    public String getLastGeneralInventoryDate() {
-        String lastGeneralInventoryDate = "2025-02-30-00-00";
+    public long getLastGeneralInventoryDate() {
+        long lastGeneralInventoryDate = 0;
         String sqlForGetLastGeneralInventoryDate = "SELECT "
                 + DbConstants.GENERAL_INVENTORY_DATE_AND_TIME_COLUMN_NAME + " FROM "
                 + DbConstants.GENERAL_INVENTORY_DATES_TABLE_NAME + " ORDER BY "
@@ -29,7 +29,7 @@ public class FirstGeneralInventoryDateDao implements GeneralInventoryDateDao {
             var cursor = db.rawQuery(sqlForGetLastGeneralInventoryDate,null);
             if(cursor.getCount() > 0){
                 cursor.moveToFirst();
-                lastGeneralInventoryDate = cursor.getString(0);
+                lastGeneralInventoryDate = cursor.getLong(0);
             }
             cursor.close();
         } catch (Exception e) {
