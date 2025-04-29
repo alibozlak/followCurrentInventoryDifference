@@ -78,4 +78,9 @@ public class FirstProductManager implements ProductService {
     public List<ProductCodeAndName> productCodeAndNames() {
         return this.productDao.productCodeAndNames();
     }
+
+    @Override
+    public int getProductIdByProductCode(String productCode) {
+        return this.productDao.getProductIdByProductCode(productCode);
+    }
 }

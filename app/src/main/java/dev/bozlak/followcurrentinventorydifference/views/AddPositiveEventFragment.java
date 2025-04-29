@@ -14,17 +14,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import dev.bozlak.followcurrentinventorydifference.business.abstracts.EventAffectingInventoryService;
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.ProductService;
 import dev.bozlak.followcurrentinventorydifference.databinding.FragmentAddPositiveEventBinding;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.events.EventProductIdEventAmountAndDate;
 import dev.bozlak.followcurrentinventorydifference.views.adapters.AddEventSpinnerAdapter;
 
 public class AddPositiveEventFragment extends Fragment {
     private FragmentAddPositiveEventBinding binding;
     private final ProductService productService = ServiceContainer.productService;
+    private final EventAffectingInventoryService eventAffectingInventoryService
+            = ServiceContainer.eventAffectingInventoryService;
     private List<String> productCodeAndNames;
     private boolean isEventPositive;
 
@@ -53,12 +59,36 @@ public class AddPositiveEventFragment extends Fragment {
         configProductSpinnerAdapter();
         isEventPositive = getArguments().getBoolean("isEventPositive");
         editAddEventFragment();
+        binding.btnAddEventInAddEventFragment.setOnClickListener(v -> doOperations(v));
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void doOperations(View view){
+        String productCode = binding.spnnrProduct.getSelectedItem().toString().substring(0,7);
+        int productId = productService.getProductIdByProductCode(productCode);
+        double amount = 0;
+        if(!binding.etAmountInAddEventFragment.getText().toString().isBlank()){
+            amount = Double.parseDouble(binding.etAmountInAddEventFragment.getText().toString());
+        }
+        if(!this.isEventPositive){
+            amount = (-1)*amount;
+        }
+        long eventDate = binding.cvDateInAddEventFragment.getDate();
+        var eventDto = new EventProductIdEventAmountAndDate(productId, amount, eventDate);
+
+        if(eventAffectingInventoryService.addEventAffectingInventory(eventDto)){
+            Toast.makeText(this.getContext(), "İşlem başarılı.", Toast.LENGTH_SHORT).show();
+            binding.spnnrProduct.setSelection(0);
+            binding.etAmountInAddEventFragment.setText("");
+            binding.cvDateInAddEventFragment.setDate(new Date().getTime());
+        } else {
+            Toast.makeText(this.getContext(), "İşlem başarısız!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void fillProductCodeAndNameStringList() {
@@ -86,20 +116,14 @@ public class AddPositiveEventFragment extends Fragment {
         if(this.isEventPositive){
             tvHeader.setText("Envanteri Olumlu Etkileyen Olay Ekle");
             color = Color.GREEN;
-            this.changeColorSomeViews(color, tvHeader, tvAmount, etAmount, btnAddEvent);
         } else {
             tvHeader.setText("Envanteri Olumsuz Etkileyen Olay Ekle");
-            this.changeColorSomeViews(color, tvHeader, tvAmount, etAmount, btnAddEvent);
         }
+        this.changeColorSomeViews(color, tvHeader, tvAmount, etAmount, btnAddEvent);
     }
 
-    private void changeColorSomeViews(
-            int color,
-            TextView tvHeader,
-            TextView tvAmount,
-            EditText etAmount,
-            Button btnAddEvent
-    ){
+    private void changeColorSomeViews(int color, TextView tvHeader, TextView tvAmount,
+            EditText etAmount, Button btnAddEvent){
         tvHeader.setTextColor(color);
         tvAmount.setTextColor(color);
         etAmount.setTextColor(color);

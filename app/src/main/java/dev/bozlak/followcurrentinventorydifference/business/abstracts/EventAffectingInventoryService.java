@@ -1,0 +1,7 @@
+package dev.bozlak.followcurrentinventorydifference.business.abstracts;
+
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.events.EventProductIdEventAmountAndDate;
+
+public interface EventAffectingInventoryService {
+    boolean addEventAffectingInventory(EventProductIdEventAmountAndDate eventProductIdEventAmountAndDate);
+}

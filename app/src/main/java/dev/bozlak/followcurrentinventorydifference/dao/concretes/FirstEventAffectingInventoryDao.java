@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import dev.bozlak.followcurrentinventorydifference.dao.DbConstants;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.EventAffectingInventoryDao;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.events.EventProductIdEventAmountAndDate;
 
 public class FirstEventAffectingInventoryDao implements EventAffectingInventoryDao {
     private static FirstEventAffectingInventoryDao firstEventAffectingInventoryDao;
@@ -37,5 +38,25 @@ public class FirstEventAffectingInventoryDao implements EventAffectingInventoryD
             System.out.println(e.getMessage());
         }
         return sumOfEventAmount;
+    }
+
+    @Override
+    public boolean addEventAffectingInventory(EventProductIdEventAmountAndDate eventProductIdEventAmountAndDate) {
+        boolean isAdded = false;
+        String sqlForAddEvent = "INSERT INTO "
+                + DbConstants.EVENTS_AFFECTING_INVENTORY_TABLE_NAME + " ("
+                + DbConstants.PRODUCT_ID_COLUMN_NAME + ", "
+                + DbConstants.AMOUNT_COLUMN_NAME + ", "
+                + DbConstants.EVENT_DATE_AND_TIME_COLUMN_NAME + ") VALUES ("
+                + eventProductIdEventAmountAndDate.getProductId() + ", "
+                + eventProductIdEventAmountAndDate.getEventAmount() + ", "
+                + eventProductIdEventAmountAndDate.getEventDateAndTime() + ");";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            db.execSQL(sqlForAddEvent);
+            isAdded = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return isAdded;
     }
 }

@@ -13,4 +13,5 @@ public interface ProductDao {
     boolean existsEnteredProductCode(String productCode);
     boolean addProduct(Product product);
     List<ProductCodeAndName> productCodeAndNames();
+    int getProductIdByProductCode(String productCode);
 }

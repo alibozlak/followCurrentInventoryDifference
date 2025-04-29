@@ -1,28 +1,14 @@
 package dev.bozlak.followcurrentinventorydifference.entitiesanddtos.events;
 
-public class EventAffectingInventory {
-    private int eventId;
+public class EventProductIdEventAmountAndDate {
     private int productId;
-    /**
-     * Can be positive or negative.
-     * Positive value mean positive event for store,
-     * Negative value mean negative event for store.
-     */
     private double eventAmount;
     private long eventDateAndTime;
 
-    public EventAffectingInventory(int productId, double eventAmount, long eventDateAndTime) {
-        this.productId = productId;
-        this.eventAmount = eventAmount;
-        this.eventDateAndTime = eventDateAndTime;
-    }
-
-    public int getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
+    public EventProductIdEventAmountAndDate(int productId, double eventAmount, long eventDateAndTime) {
+        setProductId(productId);
+        setEventAmount(eventAmount);
+        setEventDateAndTime(eventDateAndTime);
     }
 
     public int getProductId() {
