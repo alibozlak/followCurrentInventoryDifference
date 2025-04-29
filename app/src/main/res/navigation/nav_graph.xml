@@ -30,6 +30,6 @@
         <argument
             android:name="isEventPositive"
             app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="false" />
     </fragment>
 </navigation>

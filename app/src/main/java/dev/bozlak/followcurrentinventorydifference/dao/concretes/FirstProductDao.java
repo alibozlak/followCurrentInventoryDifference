@@ -3,11 +3,13 @@ package dev.bozlak.followcurrentinventorydifference.dao.concretes;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import dev.bozlak.followcurrentinventorydifference.dao.DbConstants;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.ProductDao;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.Product;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductCodeAndName;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductIdPriceTaxInventoryDifferenceDate;
 
 public class FirstProductDao implements ProductDao {
@@ -15,7 +17,7 @@ public class FirstProductDao implements ProductDao {
 
     private FirstProductDao() {}
 
-    public static FirstProductDao getInstance() {
+    public static synchronized FirstProductDao getInstance() {
         if (firstProductDao == null) {
             firstProductDao = new FirstProductDao();
         }
@@ -60,6 +62,27 @@ public class FirstProductDao implements ProductDao {
     }
 
     @Override
+    public boolean existsEnteredProductCode(String productCode) {
+        var result = false;
+        String sqlForExistsEnteredProductCode = "SELECT COUNT(*) FROM "
+                + DbConstants.PRODUCTS_TABLE_NAME + " WHERE "
+                + DbConstants.PRODUCT_CODE_COLUMN_NAME + " = " + productCode + ";";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            var cursor = db.rawQuery(sqlForExistsEnteredProductCode, null);
+            if(cursor.getCount() > 0){
+                cursor.moveToFirst();
+                if(cursor.getInt(0) > 0){
+                    result = true;
+                }
+            }
+            cursor.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+    @Override
     public boolean addProduct(Product product) {
         boolean result = false;
         String sqlForAddProduct = "INSERT INTO "
@@ -84,6 +107,31 @@ public class FirstProductDao implements ProductDao {
             System.out.println(e.getMessage());
         }
         return result;
+    }
+
+    @Override
+    public List<ProductCodeAndName> productCodeAndNames() {
+        var productCodeAndNames = new ArrayList<ProductCodeAndName>();
+        String sqlForProductCodeAndNames = "SELECT "
+                + DbConstants.PRODUCT_CODE_COLUMN_NAME + ", "
+                + DbConstants.PRODUCT_NAME_COLUMN_NAME + " FROM "
+                + DbConstants.PRODUCTS_TABLE_NAME + " ORDER BY "
+                + DbConstants.PRODUCT_ID_COLUMN_NAME + " DESC;";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            var cursor = db.rawQuery(sqlForProductCodeAndNames, null);
+            if(cursor.getCount() > 0){
+                while(cursor.moveToNext()) {
+                    String productCode = cursor.getString(0);
+                    String productName = cursor.getString(1);
+                    var product = new ProductCodeAndName(productCode, productName);
+                    productCodeAndNames.add(product);
+                }
+            }
+            cursor.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return productCodeAndNames;
     }
 
 

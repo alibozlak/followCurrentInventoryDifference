@@ -1,5 +1,6 @@
 package dev.bozlak.followcurrentinventorydifference.business.concretes;
 
+import java.util.Collections;
 import java.util.List;
 
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.ProductService;
@@ -7,6 +8,7 @@ import dev.bozlak.followcurrentinventorydifference.dao.abstracts.EventAffectingI
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.GeneralInventoryDateDao;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.ProductDao;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.Product;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductCodeAndName;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductIdPriceTaxInventoryDifferenceDate;
 
 public class FirstProductManager implements ProductService {
@@ -23,7 +25,7 @@ public class FirstProductManager implements ProductService {
         this.eventAffectingInventoryDao = eventAffectingInventoryDao;
     }
 
-    public static FirstProductManager getInstance(GeneralInventoryDateDao generalInventoryDateDao,
+    public static synchronized FirstProductManager getInstance(GeneralInventoryDateDao generalInventoryDateDao,
                                                   ProductDao productDao,
                                                   EventAffectingInventoryDao eventAffectingInventoryDao)
     {
@@ -63,7 +65,17 @@ public class FirstProductManager implements ProductService {
     }
 
     @Override
+    public boolean existsEnteredProductCode(String productCode) {
+        return this.productDao.existsEnteredProductCode(productCode);
+    }
+
+    @Override
     public boolean addProduct(Product product) {
         return this.productDao.addProduct(product);
+    }
+
+    @Override
+    public List<ProductCodeAndName> productCodeAndNames() {
+        return this.productDao.productCodeAndNames();
     }
 }

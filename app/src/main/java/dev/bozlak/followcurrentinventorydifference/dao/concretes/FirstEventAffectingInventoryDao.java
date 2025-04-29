@@ -10,7 +10,7 @@ public class FirstEventAffectingInventoryDao implements EventAffectingInventoryD
 
     private FirstEventAffectingInventoryDao() {}
 
-    public static FirstEventAffectingInventoryDao getInstance() {
+    public static synchronized FirstEventAffectingInventoryDao getInstance() {
         if (firstEventAffectingInventoryDao == null) {
             firstEventAffectingInventoryDao = new FirstEventAffectingInventoryDao();
         }

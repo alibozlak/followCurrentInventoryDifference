@@ -59,7 +59,7 @@ public class AddProductFragment extends Fragment {
 
     private void doOperation(View view){
         String productCode = binding.etProductCode.getText().toString();
-        if(checkEnteredProductCode(productCode)){
+        if(checkEnteredProductCode(productCode) && !productService.existsEnteredProductCode(productCode)){
             String currentPriceString = binding.etProductPrice.getText().toString();
             double currentPrice = 0;
             if(!currentPriceString.isBlank()){
@@ -97,11 +97,14 @@ public class AddProductFragment extends Fragment {
             } else {
                 Toast.makeText(this.getContext(), "Ürün eklenirken hata oluştu.", Toast.LENGTH_SHORT).show();
             }
-        } else {
+        } else if(!checkEnteredProductCode(productCode)){
             Toast toast = Toast.makeText(this.getContext(), "Ürün kodu geçersiz!", Toast.LENGTH_SHORT);
             if(productCode.isBlank()){
                 toast.setText("Ürün kodu boş olamaz!");
             }
+            toast.show();
+        } else {
+            Toast toast = Toast.makeText(this.getContext(), "Girilen ürün kodu zaten kayıtlı!", Toast.LENGTH_SHORT);
             toast.show();
         }
     }

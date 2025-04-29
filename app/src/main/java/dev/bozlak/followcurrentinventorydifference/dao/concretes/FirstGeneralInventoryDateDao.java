@@ -10,7 +10,7 @@ public class FirstGeneralInventoryDateDao implements GeneralInventoryDateDao {
 
     private FirstGeneralInventoryDateDao() {}
 
-    public static FirstGeneralInventoryDateDao getInstance() {
+    public static synchronized FirstGeneralInventoryDateDao getInstance() {
         if (firstGeneralInventoryDateDao == null) {
             firstGeneralInventoryDateDao = new FirstGeneralInventoryDateDao();
         }
