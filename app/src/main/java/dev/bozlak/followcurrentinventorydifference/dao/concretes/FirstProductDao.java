@@ -68,12 +68,14 @@ public class FirstProductDao implements ProductDao {
                 + DbConstants.PRODUCT_PRICE_COLUMN_NAME + ", "
                 + DbConstants.PRODUCT_TAX_COLUMN_NAME + ", "
                 + DbConstants.LAST_PRODUCT_INVENTORY_DIFFERENCE_COLUMN_NAME + ", "
-                + DbConstants.LAST_PRODUCT_INVENTORY_DATE_COLUMN_NAME + ") VALUES ("
+                + DbConstants.LAST_PRODUCT_INVENTORY_DATE_COLUMN_NAME + ", "
+                + DbConstants.PRODUCT_NAME_COLUMN_NAME + ") VALUES ("
                 + product.getProductCode() + ", "
                 + product.getCurrentPrice() + ", "
                 + product.getTax() + ", "
                 + product.getInventoryDifference() + ", "
-                + product.getLastProductInventoryDate() + ");";
+                + product.getLastProductInventoryDate() + ", '"
+                + product.getProductName() + "');";
         try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
             System.out.println(db.isReadOnly());
             db.execSQL(sqlForAddProduct);

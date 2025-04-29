@@ -76,7 +76,7 @@ public class AddProductFragment extends Fragment {
                 inventoryDifference = Double.parseDouble(inventoryDifferenceString);
             }
             long lastProductInventoryDate = binding.cvLastProductInventoryDate.getDate();
-            //String productName = binding.etProductName.getText().toString();
+            String productName = binding.etProductName.getText().toString();
 
             Product product = new Product();
             product.setProductCode(productCode);
@@ -84,7 +84,7 @@ public class AddProductFragment extends Fragment {
             product.setTax(tax);
             product.setInventoryDifference(inventoryDifference);
             product.setLastProductInventoryDate(lastProductInventoryDate);
-            //product.setProductName(productName);
+            product.setProductName(productName);
             if(addProduct(product)){
                 Toast toast = Toast.makeText(this.getContext(), "Ürün eklendi.", Toast.LENGTH_SHORT);
                 toast.show();
@@ -93,7 +93,7 @@ public class AddProductFragment extends Fragment {
                 binding.etProductTax.setText("");
                 binding.etProductInventoryDifference.setText("");
                 binding.cvLastProductInventoryDate.setDate(new Date().getTime());
-                //binding.etProductName.setText("");
+                binding.etProductName.setText("");
             } else {
                 Toast.makeText(this.getContext(), "Ürün eklenirken hata oluştu.", Toast.LENGTH_SHORT).show();
             }

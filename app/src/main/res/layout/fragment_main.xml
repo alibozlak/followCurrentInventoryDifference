@@ -46,4 +46,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
+    <Button
+        android:id="@+id/btn_addEventInMainFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Envanteri Olumlu Etkileyen Olay Ekle"
+        app:layout_constraintStart_toStartOf="@+id/btn_addProduct"
+        app:layout_constraintTop_toBottomOf="@+id/btn_addProduct" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

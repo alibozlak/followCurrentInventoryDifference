@@ -42,6 +42,7 @@ public class MainFragment extends Fragment {
         double summaryCurrentInventoryDifferencePrice = productService.getSummaryCurrentInventoryDifferencePrice();
         binding.tvSummaryDifferencePrice.setText(String.valueOf(summaryCurrentInventoryDifferencePrice));
         binding.btnAddProduct.setOnClickListener(this::navigateToAddProductFragment);
+        binding.btnAddEventInMainFragment.setOnClickListener(this::navigateToAddPositiveEventFragment);
     }
 
     @Override
@@ -52,6 +53,12 @@ public class MainFragment extends Fragment {
 
     private void navigateToAddProductFragment(View view){
         var action = MainFragmentDirections.mainFragmentToAddProductFragment();
+        Navigation.findNavController(view).navigate(action);
+    }
+
+    private void navigateToAddPositiveEventFragment(View view){
+        var action = MainFragmentDirections.mainFragmentToAddPositiveEventFragment();
+        action.setIsEventPositive(true);
         Navigation.findNavController(view).navigate(action);
     }
 }
