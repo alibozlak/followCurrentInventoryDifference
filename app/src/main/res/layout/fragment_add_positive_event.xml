@@ -93,6 +93,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_eventTypeInAddEventFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/ll_product"
+        app:layout_constraintTop_toBottomOf="@+id/ll_dateInAddEventFragment">
+
+        <TextView
+            android:id="@+id/tv_eventTypeInAddEventFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Olay Tipi : " />
+
+        <Spinner
+            android:id="@+id/spnnr_eventTypeInAddEventFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <Button
@@ -103,6 +127,6 @@
         android:text="Ekle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_dateInAddEventFragment" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_eventTypeInAddEventFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

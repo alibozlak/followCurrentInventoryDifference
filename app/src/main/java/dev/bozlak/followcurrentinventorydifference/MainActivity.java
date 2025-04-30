@@ -56,11 +56,18 @@ public class MainActivity extends AppCompatActivity {
                 + DbConstants.GENERAL_INVENTORY_ID_COLUMN_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + DbConstants.GENERAL_INVENTORY_DATE_AND_TIME_COLUMN_NAME + " INTEGER"
                 + ");";
+        String sqlForCreateAffectingTypesTable = "CREATE TABLE IF NOT EXISTS "
+                + DbConstants.AFFECTING_TYPES_TABLE_NAME + " ("
+                + DbConstants.AFFECTING_TYPE_ID_COLUMN_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + DbConstants.EVENT_ID_COLUMN_NAME + " INTEGER, "
+                + DbConstants.AFFECTING_TYPE_COLUMN_NAME + " TEXT"
+                + ");";
 
         try (SQLiteDatabase db = openOrCreateDatabase(DbConstants.DB_NAME, MODE_PRIVATE, null)){
             db.execSQL(sqlForCreateProductsTable);
             db.execSQL(sqlForCreateEventsAffectingInventoryTable);
             db.execSQL(sqlForCreateGeneralInventoryDatesTable);
+            db.execSQL(sqlForCreateAffectingTypesTable);
             //System.out.println(db.getPath());
             //db.close();
         }

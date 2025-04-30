@@ -7,4 +7,5 @@ public interface EventAffectingInventoryDao {
             int productId, long lastProductInventoryDate
     );
     boolean addEventAffectingInventory(EventProductIdEventAmountAndDate eventProductIdEventAmountAndDate);
+    int getLastEventId();
 }

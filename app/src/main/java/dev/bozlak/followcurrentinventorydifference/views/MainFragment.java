@@ -1,5 +1,6 @@
 package dev.bozlak.followcurrentinventorydifference.views;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.ProductService;
 import dev.bozlak.followcurrentinventorydifference.databinding.FragmentMainBinding;
@@ -42,7 +44,12 @@ public class MainFragment extends Fragment {
         double summaryCurrentInventoryDifferencePrice = productService.getSummaryCurrentInventoryDifferencePrice();
         binding.tvSummaryDifferencePrice.setText(String.valueOf(summaryCurrentInventoryDifferencePrice));
         binding.btnAddProduct.setOnClickListener(this::navigateToAddProductFragment);
-        binding.btnAddEventInMainFragment.setOnClickListener(this::navigateToAddPositiveEventFragment);
+        Button btnAddPositiveEvent = binding.btnAddEventInMainFragment;
+        btnAddPositiveEvent.setOnClickListener(this::navigateToAddPositiveEventFragment);
+        btnAddPositiveEvent.setBackgroundColor(Color.GREEN);
+        var btnAddNegativeEvent = binding.btnAddNegativeEventInMainFragment;
+        btnAddNegativeEvent.setOnClickListener(this::navigateToAddNegativeEventFragment);
+        btnAddNegativeEvent.setBackgroundColor(Color.RED);
     }
 
     @Override
@@ -57,8 +64,16 @@ public class MainFragment extends Fragment {
     }
 
     private void navigateToAddPositiveEventFragment(View view){
+        this.navigateToAddEventFragment(view, true);
+    }
+
+    private void navigateToAddNegativeEventFragment(View view){
+        this.navigateToAddEventFragment(view, false);
+    }
+
+    private void navigateToAddEventFragment(View view, boolean isEventPositive){
         var action = MainFragmentDirections.mainFragmentToAddPositiveEventFragment();
-        action.setIsEventPositive(true);
+        action.setIsEventPositive(isEventPositive);
         Navigation.findNavController(view).navigate(action);
     }
 }

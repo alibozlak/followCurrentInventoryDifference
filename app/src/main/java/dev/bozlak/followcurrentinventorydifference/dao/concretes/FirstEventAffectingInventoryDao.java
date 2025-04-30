@@ -59,4 +59,23 @@ public class FirstEventAffectingInventoryDao implements EventAffectingInventoryD
         }
         return isAdded;
     }
+
+    @Override
+    public int getLastEventId() {
+        int lastEventId = 0;
+        String sqlForLastEventId = "SELECT MAX("
+                + DbConstants.EVENT_ID_COLUMN_NAME + ") FROM "
+                + DbConstants.EVENTS_AFFECTING_INVENTORY_TABLE_NAME + ";";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            var cursor = db.rawQuery(sqlForLastEventId, null);
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                lastEventId = cursor.getInt(0);
+            }
+            cursor.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return lastEventId;
+    }
 }

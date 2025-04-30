@@ -17,13 +17,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import dev.bozlak.followcurrentinventorydifference.business.abstracts.AffectingTypeService;
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.EventAffectingInventoryService;
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.ProductService;
+import dev.bozlak.followcurrentinventorydifference.dao.DbConstants;
 import dev.bozlak.followcurrentinventorydifference.databinding.FragmentAddPositiveEventBinding;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.events.EventProductIdEventAmountAndDate;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.events.affectingtypes.EventIdAndAffectingType;
 import dev.bozlak.followcurrentinventorydifference.views.adapters.AddEventSpinnerAdapter;
 
 public class AddPositiveEventFragment extends Fragment {
@@ -31,7 +35,9 @@ public class AddPositiveEventFragment extends Fragment {
     private final ProductService productService = ServiceContainer.productService;
     private final EventAffectingInventoryService eventAffectingInventoryService
             = ServiceContainer.eventAffectingInventoryService;
+    private final AffectingTypeService affectingTypeService = ServiceContainer.affectingTypeService;
     private List<String> productCodeAndNames;
+    private List<String> eventTypes;
     private boolean isEventPositive;
 
 
@@ -55,9 +61,11 @@ public class AddPositiveEventFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fillProductCodeAndNameStringList();
-        configProductSpinnerAdapter();
         isEventPositive = getArguments().getBoolean("isEventPositive");
+        fillProductCodeAndNameStringList();
+        fillEventTypesStringList();
+        configProductSpinnerAdapter();
+        configEventTypeSpinnerAdapter();
         editAddEventFragment();
         binding.btnAddEventInAddEventFragment.setOnClickListener(v -> doOperations(v));
     }
@@ -82,10 +90,16 @@ public class AddPositiveEventFragment extends Fragment {
         var eventDto = new EventProductIdEventAmountAndDate(productId, amount, eventDate);
 
         if(eventAffectingInventoryService.addEventAffectingInventory(eventDto)){
-            Toast.makeText(this.getContext(), "İşlem başarılı.", Toast.LENGTH_SHORT).show();
-            binding.spnnrProduct.setSelection(0);
-            binding.etAmountInAddEventFragment.setText("");
-            binding.cvDateInAddEventFragment.setDate(new Date().getTime());
+            int eventId = eventAffectingInventoryService.getLastEventId();
+            String eventType = binding.spnnrEventTypeInAddEventFragment.getSelectedItem().toString();
+            var eventIdAndAffectingType = new EventIdAndAffectingType(eventId, eventType);
+            if(affectingTypeService.addAffectingTypeForEvent(eventIdAndAffectingType)){
+                Toast.makeText(this.getContext(), "İşlem başarılı.", Toast.LENGTH_SHORT).show();
+                binding.spnnrProduct.setSelection(0);
+                binding.etAmountInAddEventFragment.setText("");
+                binding.cvDateInAddEventFragment.setDate(new Date().getTime());
+                binding.spnnrEventTypeInAddEventFragment.setSelection(0);
+            }
         } else {
             Toast.makeText(this.getContext(), "İşlem başarısız!", Toast.LENGTH_SHORT).show();
         }
@@ -98,6 +112,18 @@ public class AddPositiveEventFragment extends Fragment {
         }
     }
 
+    /**
+     * Inheritance Is Not Allowed for Enums (baeldung)
+     * Link : <a href="https://www.baeldung.com/java-extending-enums">baeldung</a>
+     */
+    private void fillEventTypesStringList() {
+        if (this.isEventPositive){
+            this.eventTypes = Arrays.asList(DbConstants.POSITIVE_EVENT_TYPES);
+        } else {
+            this.eventTypes = Arrays.asList(DbConstants.NEGATIVE_EVENT_TYPES);
+        }
+    }
+
     private void configProductSpinnerAdapter(){
         SpinnerAdapter adapter = new AddEventSpinnerAdapter(
                 requireContext(),
@@ -105,6 +131,15 @@ public class AddPositiveEventFragment extends Fragment {
                 productCodeAndNames
         );
         binding.spnnrProduct.setAdapter(adapter);
+    }
+
+    private void configEventTypeSpinnerAdapter(){
+        SpinnerAdapter adapter = new AddEventSpinnerAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                eventTypes
+        );
+        binding.spnnrEventTypeInAddEventFragment.setAdapter(adapter);
     }
 
     private void editAddEventFragment(){

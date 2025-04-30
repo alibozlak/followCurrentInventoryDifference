@@ -4,4 +4,5 @@ import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.events.EventP
 
 public interface EventAffectingInventoryService {
     boolean addEventAffectingInventory(EventProductIdEventAmountAndDate eventProductIdEventAmountAndDate);
+    int getLastEventId();
 }

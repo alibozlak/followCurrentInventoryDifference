@@ -23,4 +23,9 @@ public class FirstEventManager implements EventAffectingInventoryService {
     public boolean addEventAffectingInventory(EventProductIdEventAmountAndDate eventProductIdEventAmountAndDate) {
         return this.eventAffectingInventoryDao.addEventAffectingInventory(eventProductIdEventAmountAndDate);
     }
+
+    @Override
+    public int getLastEventId() {
+        return this.eventAffectingInventoryDao.getLastEventId();
+    }
 }

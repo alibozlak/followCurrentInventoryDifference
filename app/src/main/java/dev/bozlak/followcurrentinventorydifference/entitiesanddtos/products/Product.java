@@ -1,5 +1,7 @@
 package dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products;
 
+import dev.bozlak.followcurrentinventorydifference.utilities.SalesUnitType;
+
 public class Product extends ProductIdPriceTaxInventoryDifferenceDate{
     private String productCode;
     private String productShortCode;

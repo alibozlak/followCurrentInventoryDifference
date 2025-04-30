@@ -1,7 +1,5 @@
 package dev.bozlak.followcurrentinventorydifference.dao;
 
-import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.SalesUnitType;
-
 public final class DbConstants {
     public static final String DB_NAME = "inventory";
     public static final String DB_PATH = "/data/user/0/dev.bozlak.followcurrentinventorydifference/databases/inventory";
@@ -27,4 +25,30 @@ public final class DbConstants {
     public static final String GENERAL_INVENTORY_DATES_TABLE_NAME = "general_inventory_dates";
     public static final String GENERAL_INVENTORY_ID_COLUMN_NAME = "general_inventory_id";
     public static final String GENERAL_INVENTORY_DATE_AND_TIME_COLUMN_NAME = "general_inventory_date_and_time";
+
+    public static final String AFFECTING_TYPES_TABLE_NAME = "affecting_types";
+    public static final String AFFECTING_TYPE_ID_COLUMN_NAME = "affecting_type_id";
+    public static final String AFFECTING_TYPE_COLUMN_NAME = "affecting_type";
+    public static final String[] NEGATIVE_EVENT_TYPES = {
+            "Kasiyer Hatası",
+            "Hırsızlık",
+            "Farklı Yöntemli İndirim",
+            "Son Envanter Sayım Hatası",
+            "Depo İrsaliye Hatası",
+            "Direkt Ürün İrsaliye Hatası",
+            "CH Çekleme Hatası",
+            "Müşteri Hatası",
+            "Diğer"
+    };
+    public static final String[] POSITIVE_EVENT_TYPES = {
+            "Hırsız Yakalama",
+            "Farklı Yöntemli İndirim",
+            "Kasiyer Hatası",
+            "Son Envanter Sayım Hatası",
+            "Depo İrsaliye Hatası",
+            "Direkt Ürün İrsaliye Hatası",
+            "CH Çekleme Hatası",
+            "Müşteri Hatası",
+            "Diğer"
+    };
 }

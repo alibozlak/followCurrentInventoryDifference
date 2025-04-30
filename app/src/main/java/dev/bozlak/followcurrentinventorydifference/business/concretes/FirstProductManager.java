@@ -57,8 +57,10 @@ public class FirstProductManager implements ProductService {
                     = productCurrentInventoryDifference + sumOfAmountFromLastProductInventoryDate;
             double productInventoryPriceUnedited = productCurrentPrice * (1 - tax/100.0);
             double productInventoryPrice = Math.round(productInventoryPriceUnedited * 100.0) / 100.0;
-            double productInventoryDifferencePrice
+            double productInventoryDifferencePriceUnedited
                     = totalProductCurrentInventoryDifference * productInventoryPrice;
+            double productInventoryDifferencePrice
+                    = Math.round(productInventoryDifferencePriceUnedited * 100.0) / 100.0;
             summaryCurrentInventoryDifferencePrice += productInventoryDifferencePrice;
         }
         return summaryCurrentInventoryDifferencePrice;
