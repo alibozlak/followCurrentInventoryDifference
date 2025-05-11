@@ -64,4 +64,13 @@
         app:layout_constraintStart_toStartOf="@+id/btn_addProduct"
         app:layout_constraintTop_toBottomOf="@+id/btn_addEventInMainFragment" />
 
+    <Button
+        android:id="@+id/btn_addGeneralInventoryDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Genel Envanter Tarihi Ekle"
+        app:layout_constraintStart_toStartOf="@+id/btn_addProduct"
+        app:layout_constraintTop_toBottomOf="@+id/btn_addNegativeEventInMainFragment" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

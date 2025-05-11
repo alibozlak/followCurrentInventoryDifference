@@ -16,6 +16,9 @@
         <action
             android:id="@+id/mainFragmentToAddPositiveEventFragment"
             app:destination="@id/addPositiveEventFragment" />
+        <action
+            android:id="@+id/mainFragmentToAddGeneralInventoryDateFragment"
+            app:destination="@id/addGeneralInventoryDateFragment" />
     </fragment>
     <fragment
         android:id="@+id/addProductFragment"
@@ -31,5 +34,14 @@
             android:name="isEventPositive"
             app:argType="boolean"
             android:defaultValue="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGeneralInventoryDateFragment"
+        android:name="dev.bozlak.followcurrentinventorydifference.views.AddGeneralInventoryDateFragment"
+        android:label="fragment_add_general_inventory_date"
+        tools:layout="@layout/fragment_add_general_inventory_date" >
+        <action
+            android:id="@+id/addGeneralInventoryDateFragmentToMainFragment"
+            app:destination="@id/mainFragment2" />
     </fragment>
 </navigation>

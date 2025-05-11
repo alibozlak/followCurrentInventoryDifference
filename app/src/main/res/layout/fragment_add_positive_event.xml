@@ -40,7 +40,7 @@
         <Spinner
             android:id="@+id/spnnr_product"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -115,7 +115,7 @@
         <Spinner
             android:id="@+id/spnnr_eventTypeInAddEventFragment"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1" />
     </LinearLayout>
 

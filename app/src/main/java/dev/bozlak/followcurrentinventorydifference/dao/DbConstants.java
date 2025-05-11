@@ -30,6 +30,9 @@ public final class DbConstants {
     public static final String AFFECTING_TYPE_ID_COLUMN_NAME = "affecting_type_id";
     public static final String AFFECTING_TYPE_COLUMN_NAME = "affecting_type";
     public static final String[] NEGATIVE_EVENT_TYPES = {
+            "SKT",
+            "Bozuk/Hatalı Ürün",
+            "Müşteri İadesi",
             "Kasiyer Hatası",
             "Hırsızlık",
             "Farklı Yöntemli İndirim",

@@ -44,6 +44,7 @@ public class MainFragment extends Fragment {
         double summaryCurrentInventoryDifferencePrice = productService.getSummaryCurrentInventoryDifferencePrice();
         binding.tvSummaryDifferencePrice.setText(String.valueOf(summaryCurrentInventoryDifferencePrice));
         binding.btnAddProduct.setOnClickListener(this::navigateToAddProductFragment);
+        binding.btnAddGeneralInventoryDate.setOnClickListener(this::navigateToAddGeneralInventoryDateFragment);
         Button btnAddPositiveEvent = binding.btnAddEventInMainFragment;
         btnAddPositiveEvent.setOnClickListener(this::navigateToAddPositiveEventFragment);
         btnAddPositiveEvent.setBackgroundColor(Color.GREEN);
@@ -56,6 +57,11 @@ public class MainFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void navigateToAddGeneralInventoryDateFragment(View view){
+        var action = MainFragmentDirections.mainFragmentToAddGeneralInventoryDateFragment();
+        Navigation.findNavController(view).navigate(action);
     }
 
     private void navigateToAddProductFragment(View view){

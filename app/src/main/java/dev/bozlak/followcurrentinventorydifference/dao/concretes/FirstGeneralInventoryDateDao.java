@@ -37,4 +37,22 @@ public class FirstGeneralInventoryDateDao implements GeneralInventoryDateDao {
         }
         return lastGeneralInventoryDate;
     }
+
+    @Override
+    public boolean addGeneralInventoryDate(long date) {
+        boolean result = false;
+        String sqlForAddGeneralInventoryDate = "INSERT INTO "
+                + DbConstants.GENERAL_INVENTORY_DATES_TABLE_NAME + " ("
+                + DbConstants.GENERAL_INVENTORY_DATE_AND_TIME_COLUMN_NAME + ") VALUES ("
+                + date + ");";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)){
+            db.execSQL(sqlForAddGeneralInventoryDate);
+            result = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+
 }

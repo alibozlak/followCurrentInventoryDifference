@@ -2,9 +2,11 @@ package dev.bozlak.followcurrentinventorydifference.views;
 
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.AffectingTypeService;
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.EventAffectingInventoryService;
+import dev.bozlak.followcurrentinventorydifference.business.abstracts.GeneralInventoryDateService;
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.ProductService;
 import dev.bozlak.followcurrentinventorydifference.business.concretes.FirstAffectingTypeManager;
 import dev.bozlak.followcurrentinventorydifference.business.concretes.FirstEventManager;
+import dev.bozlak.followcurrentinventorydifference.business.concretes.FirstGeneralInventoryDateManager;
 import dev.bozlak.followcurrentinventorydifference.business.concretes.FirstProductManager;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.AffectingTypeDao;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.EventAffectingInventoryDao;
@@ -29,11 +31,12 @@ public class ServiceContainer {
             eventAffectingInventoryDao
     );
 
-    public static final EventAffectingInventoryService eventAffectingInventoryService = FirstEventManager.getInstance(
-            eventAffectingInventoryDao
-    );
+    public static final EventAffectingInventoryService eventAffectingInventoryService =
+            FirstEventManager.getInstance(eventAffectingInventoryDao);
 
-    public static final AffectingTypeService affectingTypeService = FirstAffectingTypeManager.getInstance(
-            affectingTypeDao
-    );
+    public static final AffectingTypeService affectingTypeService =
+            FirstAffectingTypeManager.getInstance(affectingTypeDao);
+
+    public static final GeneralInventoryDateService generalInventoryDateService =
+            FirstGeneralInventoryDateManager.getInstance(generalInventoryDateDao);
 }
