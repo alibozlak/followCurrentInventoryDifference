@@ -28,6 +28,19 @@ public class FirstProductDao implements ProductDao {
     public List<ProductIdPriceTaxInventoryDifferenceDate> getProductIdPriceTaxInventoryDifferenceDates(
             long lastGeneralInventoryDate
     ) {
+        return this.getProductIdPriceTaxInventoryDifferenceDates(
+                true, lastGeneralInventoryDate
+        );
+    }
+
+    @Override
+    public List<ProductIdPriceTaxInventoryDifferenceDate> getProductIdPriceTaxInventoryDifferenceDates() {
+        return this.getProductIdPriceTaxInventoryDifferenceDates(false, 0);
+    }
+
+    private List<ProductIdPriceTaxInventoryDifferenceDate> getProductIdPriceTaxInventoryDifferenceDates(
+            boolean existLastGeneralInventoryDateParam, long param
+    ){
         List<ProductIdPriceTaxInventoryDifferenceDate> productIdPriceTaxInventoryDifferenceAndDates
                 = new ArrayList<>();
         String sqlForProductDtos = "SELECT "
@@ -36,9 +49,13 @@ public class FirstProductDao implements ProductDao {
                 + DbConstants.PRODUCT_TAX_COLUMN_NAME + ", "
                 + DbConstants.LAST_PRODUCT_INVENTORY_DIFFERENCE_COLUMN_NAME + ", "
                 + DbConstants.LAST_PRODUCT_INVENTORY_DATE_COLUMN_NAME + " FROM "
-                + DbConstants.PRODUCTS_TABLE_NAME + " WHERE "
-                + DbConstants.LAST_PRODUCT_INVENTORY_DATE_COLUMN_NAME
-                + " >= " + lastGeneralInventoryDate + ";";
+                + DbConstants.PRODUCTS_TABLE_NAME;
+        if(existLastGeneralInventoryDateParam){
+            sqlForProductDtos += " WHERE "
+                    + DbConstants.LAST_PRODUCT_INVENTORY_DATE_COLUMN_NAME
+                    + " >= " + param;
+        }
+        sqlForProductDtos += ";";
         try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
             var cursor = db.rawQuery(sqlForProductDtos, null);
             if(cursor.getCount() > 0){
@@ -58,7 +75,7 @@ public class FirstProductDao implements ProductDao {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return productIdPriceTaxInventoryDifferenceAndDates;
+        return  productIdPriceTaxInventoryDifferenceAndDates;
     }
 
     @Override

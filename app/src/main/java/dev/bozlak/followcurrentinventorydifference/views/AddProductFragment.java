@@ -1,6 +1,5 @@
 package dev.bozlak.followcurrentinventorydifference.views;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -48,6 +47,7 @@ public class AddProductFragment extends Fragment {
         binding.etProductInventoryDifference.setInputType(
                 InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED
         );
+        binding.cvLastProductInventoryDate.setOnDateChangeListener(Utils.onDateChangeListener);
         binding.btnAddProductInAddProductFragment.setOnClickListener(v -> doOperation(v));
     }
 

@@ -1,7 +1,10 @@
 package dev.bozlak.followcurrentinventorydifference.business.concretes;
 
+import java.util.List;
+
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.GeneralInventoryDateService;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.GeneralInventoryDateDao;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.GeneralInventoryDate;
 
 public class FirstGeneralInventoryDateManager implements GeneralInventoryDateService {
     private static FirstGeneralInventoryDateManager firstGeneralInventoryDateManager;
@@ -23,5 +26,15 @@ public class FirstGeneralInventoryDateManager implements GeneralInventoryDateSer
     @Override
     public boolean addGeneralInventoryDate(long date) {
         return this.generalInventoryDateDao.addGeneralInventoryDate(date);
+    }
+
+    @Override
+    public List<GeneralInventoryDate> getAllGeneralInventoryDates() {
+        return this.generalInventoryDateDao.getAllGeneralInventoryDates();
+    }
+
+    @Override
+    public boolean deleteGeneralInventoryDate(int generalInventoryId) {
+        return this.generalInventoryDateDao.deleteGeneralInventoryDate(generalInventoryId);
     }
 }

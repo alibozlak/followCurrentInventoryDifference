@@ -10,6 +10,7 @@ public interface ProductDao {
     List<ProductIdPriceTaxInventoryDifferenceDate> getProductIdPriceTaxInventoryDifferenceDates(
             long lastGeneralInventoryDate
     );
+    public List<ProductIdPriceTaxInventoryDifferenceDate> getProductIdPriceTaxInventoryDifferenceDates();
     boolean existsEnteredProductCode(String productCode);
     boolean addProduct(Product product);
     List<ProductCodeAndName> productCodeAndNames();

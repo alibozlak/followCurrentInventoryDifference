@@ -67,6 +67,7 @@ public class AddPositiveEventFragment extends Fragment {
         configProductSpinnerAdapter();
         configEventTypeSpinnerAdapter();
         editAddEventFragment();
+        binding.cvDateInAddEventFragment.setOnDateChangeListener(Utils.onDateChangeListener);
         binding.btnAddEventInAddEventFragment.setOnClickListener(v -> doOperations(v));
     }
 

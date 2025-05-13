@@ -1,6 +1,5 @@
 package dev.bozlak.followcurrentinventorydifference.business.concretes;
 
-import java.util.Collections;
 import java.util.List;
 
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.ProductService;
@@ -39,8 +38,10 @@ public class FirstProductManager implements ProductService {
     @Override
     public double getSummaryCurrentInventoryDifferencePrice() {
         long lastGeneralInventoryDate = this.generalInventoryDateDao.getLastGeneralInventoryDate();
+//        List<ProductIdPriceTaxInventoryDifferenceDate> productIdPriceTaxInventoryDifferenceDateList
+//                = this.productDao.getProductIdPriceTaxInventoryDifferenceDates(lastGeneralInventoryDate);
         List<ProductIdPriceTaxInventoryDifferenceDate> productIdPriceTaxInventoryDifferenceDateList
-                = this.productDao.getProductIdPriceTaxInventoryDifferenceDates(lastGeneralInventoryDate);
+                = this.productDao.getProductIdPriceTaxInventoryDifferenceDates();
         double summaryCurrentInventoryDifferencePrice = 0;
         for (var productDto : productIdPriceTaxInventoryDifferenceDateList){
             int productId = productDto.getProductId();
@@ -48,6 +49,9 @@ public class FirstProductManager implements ProductService {
             byte tax = productDto.getTax();
             double productCurrentInventoryDifference = productDto.getInventoryDifference();
             long lastProductInventoryDate = productDto.getLastProductInventoryDate();
+            if (lastGeneralInventoryDate > lastProductInventoryDate){
+                lastProductInventoryDate = lastGeneralInventoryDate;
+            }
 
             double sumOfAmountFromLastProductInventoryDate
                     = this.eventAffectingInventoryDao.getSumOfEventAmountGivenProductIdAndLastProductInventory(

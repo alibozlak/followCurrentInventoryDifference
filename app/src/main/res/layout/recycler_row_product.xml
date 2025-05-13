@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_recyclerRowProduct"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp">
+
+    <TextView
+        android:id="@+id/tv_productCodeInRecyclerRowProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:text="ProductCode"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_productNameInRecyclerRowProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:text="ProductName"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_productCodeInRecyclerRowProduct"
+        app:layout_constraintTop_toTopOf="@+id/tv_productCodeInRecyclerRowProduct" />
+
+    <TextView
+        android:id="@+id/tv_labelCurrentPriceInRecyclerRowProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/tv_productCodeInRecyclerRowProduct"
+        app:layout_constraintTop_toBottomOf="@+id/tv_productCodeInRecyclerRowProduct"
+        android:layout_marginTop="3dp"
+        android:text="Ürünün Güncel Fiyatı : " />
+
+    <TextView
+        android:id="@+id/tv_currentPriceInRecyclerRowProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CurrentPrice"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tv_labelCurrentPriceInRecyclerRowProduct"
+        app:layout_constraintTop_toTopOf="@+id/tv_labelCurrentPriceInRecyclerRowProduct" />/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,9 +10,10 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.Toast;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.GeneralInventoryDateService;
 import dev.bozlak.followcurrentinventorydifference.databinding.FragmentAddGeneralInventoryDateBinding;
@@ -41,6 +42,7 @@ public class AddGeneralInventoryDateFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.cvGeneralInvetoryDate.setOnDateChangeListener(Utils.onDateChangeListener);
         binding.btnInAddGeneralInventoryDateFragment.setOnClickListener(v -> doOperations(v));
     }
 
@@ -53,7 +55,7 @@ public class AddGeneralInventoryDateFragment extends Fragment {
     private void doOperations(View view){
         long date = binding.cvGeneralInvetoryDate.getDate();
         if(generalInventoryDateService.addGeneralInventoryDate(date)){
-            binding.cvGeneralInvetoryDate.setDate(new Date().getTime());
+            binding.cvGeneralInvetoryDate.setDate(Calendar.getInstance().getTimeInMillis());
             navigateToMainFragment(view);
             Toast.makeText(requireContext(), "Envanter tarihi eklendi!", Toast.LENGTH_SHORT).show();
         } else {

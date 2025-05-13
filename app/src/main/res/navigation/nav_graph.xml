@@ -19,6 +19,9 @@
         <action
             android:id="@+id/mainFragmentToAddGeneralInventoryDateFragment"
             app:destination="@id/addGeneralInventoryDateFragment" />
+        <action
+            android:id="@+id/mainFragmentToListOfGeneralInventoryFragment"
+            app:destination="@id/listOfGeneralInventoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/addProductFragment"
@@ -44,4 +47,9 @@
             android:id="@+id/addGeneralInventoryDateFragmentToMainFragment"
             app:destination="@id/mainFragment2" />
     </fragment>
+    <fragment
+        android:id="@+id/listOfGeneralInventoryFragment"
+        android:name="dev.bozlak.followcurrentinventorydifference.views.ListOfGeneralInventoryFragment"
+        android:label="fragment_list_of_general_inventory"
+        tools:layout="@layout/fragment_list_of_general_inventory" />
 </navigation>

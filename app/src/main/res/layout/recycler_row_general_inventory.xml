@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="3dp">
+
+    <TextView
+        android:id="@+id/tv_inventoryDateInRecyclerRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#CF451B"
+        android:text="yyyy-mm-dd"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/btn_deleteGeneralInventory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/design_default_color_error"
+        android:text="Sil" />
+
+</LinearLayout>
