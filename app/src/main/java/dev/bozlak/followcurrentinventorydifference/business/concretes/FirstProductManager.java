@@ -1,5 +1,6 @@
 package dev.bozlak.followcurrentinventorydifference.business.concretes;
 
+import java.util.Collections;
 import java.util.List;
 
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.ProductService;
@@ -8,6 +9,7 @@ import dev.bozlak.followcurrentinventorydifference.dao.abstracts.GeneralInventor
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.ProductDao;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.Product;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductCodeAndName;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductIdCodeNameAndPrice;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductIdPriceTaxInventoryDifferenceDate;
 
 public class FirstProductManager implements ProductService {
@@ -38,8 +40,6 @@ public class FirstProductManager implements ProductService {
     @Override
     public double getSummaryCurrentInventoryDifferencePrice() {
         long lastGeneralInventoryDate = this.generalInventoryDateDao.getLastGeneralInventoryDate();
-//        List<ProductIdPriceTaxInventoryDifferenceDate> productIdPriceTaxInventoryDifferenceDateList
-//                = this.productDao.getProductIdPriceTaxInventoryDifferenceDates(lastGeneralInventoryDate);
         List<ProductIdPriceTaxInventoryDifferenceDate> productIdPriceTaxInventoryDifferenceDateList
                 = this.productDao.getProductIdPriceTaxInventoryDifferenceDates();
         double summaryCurrentInventoryDifferencePrice = 0;
@@ -51,6 +51,7 @@ public class FirstProductManager implements ProductService {
             long lastProductInventoryDate = productDto.getLastProductInventoryDate();
             if (lastGeneralInventoryDate > lastProductInventoryDate){
                 lastProductInventoryDate = lastGeneralInventoryDate;
+                productCurrentInventoryDifference = 0;
             }
 
             double sumOfAmountFromLastProductInventoryDate
@@ -88,5 +89,10 @@ public class FirstProductManager implements ProductService {
     @Override
     public int getProductIdByProductCode(String productCode) {
         return this.productDao.getProductIdByProductCode(productCode);
+    }
+
+    @Override
+    public List<ProductIdCodeNameAndPrice> getAllProductIdCodeNameAndPrice() {
+        return this.productDao.getAllProductIdCodeNameAndPrice();
     }
 }

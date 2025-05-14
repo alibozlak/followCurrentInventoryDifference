@@ -46,6 +46,7 @@ public class MainFragment extends Fragment {
         binding.btnAddProduct.setOnClickListener(this::navigateToAddProductFragment);
         binding.btnAddGeneralInventoryDate.setOnClickListener(this::navigateToAddGeneralInventoryDateFragment);
         binding.btnListGeneralInventoryDates.setOnClickListener(this::navigateToListOfGeneralInventoryFragment);
+        binding.btnListProducts.setOnClickListener(this::navigateToListOfProductFragment);
         Button btnAddPositiveEvent = binding.btnAddEventInMainFragment;
         btnAddPositiveEvent.setOnClickListener(this::navigateToAddPositiveEventFragment);
         btnAddPositiveEvent.setBackgroundColor(Color.GREEN);
@@ -67,6 +68,11 @@ public class MainFragment extends Fragment {
 
     private void navigateToListOfGeneralInventoryFragment(View view){
         var action = MainFragmentDirections.mainFragmentToListOfGeneralInventoryFragment();
+        Navigation.findNavController(view).navigate(action);
+    }
+
+    private void navigateToListOfProductFragment(View view){
+        var action = MainFragmentDirections.mainFragmentToListOfProductFragment();
         Navigation.findNavController(view).navigate(action);
     }
 

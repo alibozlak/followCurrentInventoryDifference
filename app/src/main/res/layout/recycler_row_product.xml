@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_recyclerRowProduct"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp">
+    android:layout_margin="3dp"
+    android:background="#B8B3C0">
 
     <TextView
         android:id="@+id/tv_productCodeInRecyclerRowProduct"
@@ -34,10 +34,10 @@
         android:id="@+id/tv_labelCurrentPriceInRecyclerRowProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/tv_productCodeInRecyclerRowProduct"
-        app:layout_constraintTop_toBottomOf="@+id/tv_productCodeInRecyclerRowProduct"
         android:layout_marginTop="3dp"
-        android:text="Ürünün Güncel Fiyatı : " />
+        android:text="Ürünün Güncel Fiyatı : "
+        app:layout_constraintStart_toStartOf="@+id/tv_productCodeInRecyclerRowProduct"
+        app:layout_constraintTop_toBottomOf="@+id/tv_productCodeInRecyclerRowProduct" />
 
     <TextView
         android:id="@+id/tv_currentPriceInRecyclerRowProduct"
@@ -47,6 +47,15 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/tv_labelCurrentPriceInRecyclerRowProduct"
-        app:layout_constraintTop_toTopOf="@+id/tv_labelCurrentPriceInRecyclerRowProduct" />/>
+        app:layout_constraintTop_toTopOf="@+id/tv_labelCurrentPriceInRecyclerRowProduct" />
+
+    <Button
+        android:id="@+id/btn_inRecyclerRowProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Düzenle"
+        app:layout_constraintStart_toStartOf="@+id/tv_productCodeInRecyclerRowProduct"
+        app:layout_constraintTop_toBottomOf="@+id/tv_labelCurrentPriceInRecyclerRowProduct"
+        android:layout_marginTop="3dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.Product;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductCodeAndName;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductIdCodeNameAndPrice;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductIdPriceTaxInventoryDifferenceDate;
 
 public interface ProductDao {
@@ -15,4 +16,5 @@ public interface ProductDao {
     boolean addProduct(Product product);
     List<ProductCodeAndName> productCodeAndNames();
     int getProductIdByProductCode(String productCode);
+    List<ProductIdCodeNameAndPrice> getAllProductIdCodeNameAndPrice();
 }

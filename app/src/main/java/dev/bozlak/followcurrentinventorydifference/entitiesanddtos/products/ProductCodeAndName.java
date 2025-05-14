@@ -4,6 +4,9 @@ public class ProductCodeAndName {
     private String productCode;
     private String productName;
 
+    public ProductCodeAndName() {
+    }
+
     public ProductCodeAndName(String productCode, String productName) {
         this.productCode = productCode;
         this.productName = productName;

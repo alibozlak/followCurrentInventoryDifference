@@ -22,7 +22,6 @@ public class ListOfGeneralInventoryFragment extends Fragment {
     private FragmentListOfGeneralInventoryBinding binding;
     private final GeneralInventoryDateService generalInventoryDateService =
             ServiceContainer.generalInventoryDateService;
-    private List<GeneralInventoryDate> generalInventoryDates = null;
 
     public ListOfGeneralInventoryFragment() {
         // Required empty public constructor
@@ -43,7 +42,7 @@ public class ListOfGeneralInventoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        this.generalInventoryDates = this.generalInventoryDateService.getAllGeneralInventoryDates();
+        var generalInventoryDates = this.generalInventoryDateService.getAllGeneralInventoryDates();
         binding.rvInListOfGeneralInventoryFragment.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvInListOfGeneralInventoryFragment.setAdapter(new GeneralInventoryAdapter(generalInventoryDates));
     }

@@ -10,6 +10,7 @@ import dev.bozlak.followcurrentinventorydifference.dao.DbConstants;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.ProductDao;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.Product;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductCodeAndName;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductIdCodeNameAndPrice;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductIdPriceTaxInventoryDifferenceDate;
 
 public class FirstProductDao implements ProductDao {
@@ -169,6 +170,37 @@ public class FirstProductDao implements ProductDao {
             System.out.println(e.getMessage());
         }
         return productId;
+    }
+
+    @Override
+    public List<ProductIdCodeNameAndPrice> getAllProductIdCodeNameAndPrice() {
+        List<ProductIdCodeNameAndPrice> productIdCodeNameAndPrices = new ArrayList<>();
+        String sqlForProductIdCodeNameAndPrices = "SELECT "
+                + DbConstants.PRODUCT_ID_COLUMN_NAME + ", "
+                + DbConstants.PRODUCT_CODE_COLUMN_NAME + ", "
+                + DbConstants.PRODUCT_NAME_COLUMN_NAME + ", "
+                + DbConstants.PRODUCT_PRICE_COLUMN_NAME + " FROM "
+                + DbConstants.PRODUCTS_TABLE_NAME + " ORDER BY "
+                + DbConstants.PRODUCT_CODE_COLUMN_NAME + ";";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            var cursor = db.rawQuery(sqlForProductIdCodeNameAndPrices, null);
+            if(cursor.getCount() > 0){
+                while(cursor.moveToNext()) {
+                    int productId = cursor.getInt(0);
+                    String productCode = cursor.getString(1);
+                    String productName = cursor.getString(2);
+                    double price = cursor.getDouble(3);
+                    var productIdCodeNameAndPrice = new ProductIdCodeNameAndPrice(
+                            productCode, productName, productId, price
+                    );
+                    productIdCodeNameAndPrices.add(productIdCodeNameAndPrice);
+                }
+            }
+            cursor.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return productIdCodeNameAndPrices;
     }
 
 
