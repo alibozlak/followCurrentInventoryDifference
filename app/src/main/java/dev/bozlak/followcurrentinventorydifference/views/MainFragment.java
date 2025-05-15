@@ -78,6 +78,8 @@ public class MainFragment extends Fragment {
 
     private void navigateToAddProductFragment(View view){
         var action = MainFragmentDirections.mainFragmentToAddProductFragment();
+        action.setForAddProduct(true);
+        action.setProductId(-1);
         Navigation.findNavController(view).navigate(action);
     }
 

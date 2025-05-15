@@ -4,12 +4,14 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import dev.bozlak.followcurrentinventorydifference.databinding.RecyclerRowProductBinding;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.products.ProductIdCodeNameAndPrice;
+import dev.bozlak.followcurrentinventorydifference.views.ListOfProductFragmentDirections;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
     private final List<ProductIdCodeNameAndPrice> products;
@@ -45,7 +47,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.binding.tvCurrentPriceInRecyclerRowProduct.setText(
                 String.valueOf(this.products.get(position).getPrice())
         );
-
+        holder.binding.btnInRecyclerRowProduct.setOnClickListener(v -> {
+            var action = ListOfProductFragmentDirections.actionListOfProductFragmentToAddProductFragment();
+            action.setForAddProduct(false);
+            action.setProductId(this.products.get(position).getProductId());
+            Navigation.findNavController(v).navigate(action);
+        });
     }
 
     @Override

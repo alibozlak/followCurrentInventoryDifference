@@ -30,7 +30,19 @@
         android:id="@+id/addProductFragment"
         android:name="dev.bozlak.followcurrentinventorydifference.views.AddProductFragment"
         android:label="fragment_add_product"
-        tools:layout="@layout/fragment_add_product" />
+        tools:layout="@layout/fragment_add_product" >
+        <argument
+            android:name="forAddProduct"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <argument
+            android:name="productId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/actionAddProductFragmentToListOfProductFragment"
+            app:destination="@id/listOfProductFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addPositiveEventFragment"
         android:name="dev.bozlak.followcurrentinventorydifference.views.AddPositiveEventFragment"
@@ -59,5 +71,9 @@
         android:id="@+id/listOfProductFragment"
         android:name="dev.bozlak.followcurrentinventorydifference.views.ListOfProductFragment"
         android:label="fragment_list_of_product"
-        tools:layout="@layout/fragment_list_of_product" />
+        tools:layout="@layout/fragment_list_of_product" >
+        <action
+            android:id="@+id/action_listOfProductFragmentToAddProductFragment"
+            app:destination="@id/addProductFragment" />
+    </fragment>
 </navigation>

@@ -13,5 +13,7 @@ public interface ProductService {
     List<ProductCodeAndName> productCodeAndNames();
     int getProductIdByProductCode(String productCode);
     List<ProductIdCodeNameAndPrice> getAllProductIdCodeNameAndPrice();
+    Product getProductByProductId(int productId);
+    boolean updateProduct(Product product);
 
 }

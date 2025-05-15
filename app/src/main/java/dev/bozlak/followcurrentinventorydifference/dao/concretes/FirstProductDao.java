@@ -203,5 +203,53 @@ public class FirstProductDao implements ProductDao {
         return productIdCodeNameAndPrices;
     }
 
+    @Override
+    public Product getProductByProductId(int productId) {
+        Product product = new Product();
+        String sqlForGetProductByProductId = "SELECT * FROM "
+                + DbConstants.PRODUCTS_TABLE_NAME + " WHERE "
+                + DbConstants.PRODUCT_ID_COLUMN_NAME + " = " + productId + ";";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            var cursor = db.rawQuery(sqlForGetProductByProductId, null);
+            if(cursor.getCount() > 0){
+                cursor.moveToFirst();
+                product.setProductId(productId);
+                product.setProductCode(cursor.getString(7));
+                product.setCurrentPrice(cursor.getDouble(1));
+                product.setTax((byte) cursor.getShort(2));
+                product.setInventoryDifference(cursor.getDouble(3));
+                product.setLastProductInventoryDate(cursor.getLong(4));
+                product.setProductName(cursor.getString(6));
+            }
+            cursor.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return product;
+    }
+
+    @Override
+    public boolean updateProduct(Product product) {
+        boolean result = false;
+        String sqlForUpdateProduct = "UPDATE "
+                + DbConstants.PRODUCTS_TABLE_NAME + " SET "
+                + DbConstants.PRODUCT_CODE_COLUMN_NAME + " = " + product.getProductCode() + ", "
+                + DbConstants.PRODUCT_PRICE_COLUMN_NAME + " = " + product.getCurrentPrice() + ", "
+                + DbConstants.PRODUCT_TAX_COLUMN_NAME + " = " + product.getTax() + ", "
+                + DbConstants.LAST_PRODUCT_INVENTORY_DIFFERENCE_COLUMN_NAME + " = "
+                + product.getInventoryDifference() + ", "
+                + DbConstants.LAST_PRODUCT_INVENTORY_DATE_COLUMN_NAME + " = "
+                + product.getLastProductInventoryDate() + ", "
+                + DbConstants.PRODUCT_NAME_COLUMN_NAME + " = '" + product.getProductName() + "' WHERE "
+                + DbConstants.PRODUCT_ID_COLUMN_NAME + " = " + product.getProductId() + ";";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            db.execSQL(sqlForUpdateProduct);
+            result = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
 
 }
