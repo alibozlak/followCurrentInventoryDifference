@@ -24,6 +24,8 @@ import dev.bozlak.followcurrentinventorydifference.utilities.ProductUtil;
 public class AddProductFragment extends Fragment {
     private final ProductService productService = ServiceContainer.productService;
     private FragmentAddProductBinding binding;
+    private String productCodeFromDb;
+
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -55,14 +57,7 @@ public class AddProductFragment extends Fragment {
             binding.btnAddProductInAddProductFragment.setOnClickListener(v -> doOperationsForAddProduct(v));
         } else {
             binding.btnAddProductInAddProductFragment.setVisibility(View.GONE);
-            int productId = getArguments().getInt("productId");
-            Product product = productService.getProductByProductId(productId);
-            binding.etProductCode.setText(product.getProductCode());
-            binding.etProductPrice.setText(String.valueOf(product.getCurrentPrice()));
-            binding.etProductTax.setText(String.valueOf(product.getTax()));
-            binding.etProductInventoryDifference.setText(String.valueOf(product.getInventoryDifference()));
-            binding.cvLastProductInventoryDate.setDate(product.getLastProductInventoryDate());
-            binding.etProductName.setText(product.getProductName());
+            this.fillEditTextsForUpdateProductFragment();
             binding.btnUpdateProductInAddProductFragment.setOnClickListener(v -> doOperationsForUpdateProduct(v));
         }
     }
@@ -73,37 +68,11 @@ public class AddProductFragment extends Fragment {
         binding = null;
     }
 
-    // Must edit this method or other methods where it is used.
-    //
-    //
     private Product doValidationsAndReturnProduct(){
-        Product product = new Product();
+        Product product = this.doOperationsWithoutProductCodeAndReturnProduct();
         String productCode = binding.etProductCode.getText().toString();
         if(checkEnteredProductCode(productCode) && !productService.existsEnteredProductCode(productCode)){
-            String currentPriceString = binding.etProductPrice.getText().toString();
-            double currentPrice = 0;
-            if(!currentPriceString.isBlank()){
-                currentPrice = Double.parseDouble(currentPriceString);
-            }
-            String taxString = binding.etProductTax.getText().toString();
-            byte tax = 0;
-            if(!taxString.isBlank()){
-                tax = Byte.parseByte(taxString);
-            }
-            String inventoryDifferenceString = binding.etProductInventoryDifference.getText().toString();
-            double inventoryDifference = 0;
-            if(!inventoryDifferenceString.isBlank()){
-                inventoryDifference = Double.parseDouble(inventoryDifferenceString);
-            }
-            long lastProductInventoryDate = binding.cvLastProductInventoryDate.getDate();
-            String productName = binding.etProductName.getText().toString();
-
             product.setProductCode(productCode);
-            product.setCurrentPrice(currentPrice);
-            product.setTax(tax);
-            product.setInventoryDifference(inventoryDifference);
-            product.setLastProductInventoryDate(lastProductInventoryDate);
-            product.setProductName(productName);
         } else if(!checkEnteredProductCode(productCode)){
             product.setProductCode("0");
             Toast toast = Toast.makeText(this.getContext(), "Ürün kodu geçersiz!", Toast.LENGTH_SHORT);
@@ -116,6 +85,34 @@ public class AddProductFragment extends Fragment {
             Toast toast = Toast.makeText(this.getContext(), "Girilen ürün kodu zaten kayıtlı!", Toast.LENGTH_SHORT);
             toast.show();
         }
+        return product;
+    }
+
+    private Product doOperationsWithoutProductCodeAndReturnProduct(){
+        Product product = new Product();
+        String currentPriceString = binding.etProductPrice.getText().toString();
+        double currentPrice = 0;
+        if(!currentPriceString.isBlank()){
+            currentPrice = Double.parseDouble(currentPriceString);
+        }
+        String taxString = binding.etProductTax.getText().toString();
+        byte tax = 0;
+        if(!taxString.isBlank()){
+            tax = Byte.parseByte(taxString);
+        }
+        String inventoryDifferenceString = binding.etProductInventoryDifference.getText().toString();
+        double inventoryDifference = 0;
+        if(!inventoryDifferenceString.isBlank()){
+            inventoryDifference = Double.parseDouble(inventoryDifferenceString);
+        }
+        long lastProductInventoryDate = binding.cvLastProductInventoryDate.getDate();
+        String productName = binding.etProductName.getText().toString();
+        product.setProductCode("0");
+        product.setCurrentPrice(currentPrice);
+        product.setTax(tax);
+        product.setInventoryDifference(inventoryDifference);
+        product.setLastProductInventoryDate(lastProductInventoryDate);
+        product.setProductName(productName);
         return product;
     }
 
@@ -138,20 +135,45 @@ public class AddProductFragment extends Fragment {
     }
 
     private void doOperationsForUpdateProduct(View view){
-        Product product = this.doValidationsAndReturnProduct();
-        if(product.getProductCode().length() > 1){
-            if(this.productService.updateProduct(product)) {
-                var action = AddProductFragmentDirections.actionAddProductFragmentToListOfProductFragment();
-                Navigation.findNavController(view).navigate(action);
-                Toast toast = Toast.makeText(requireContext(), "Ürün güncellendi.", Toast.LENGTH_SHORT);
-                toast.show();
-            } else {
-                Toast.makeText(this.getContext(), "Ürün güncellenirken hata oluştu.", Toast.LENGTH_SHORT).show();
+        String enteredProductCode = binding.etProductCode.getText().toString();
+        if(enteredProductCode.equals(this.productCodeFromDb)){
+            Product product = this.doOperationsWithoutProductCodeAndReturnProduct();
+            product.setProductId(getArguments().getInt("productId"));
+            product.setProductCode(this.productCodeFromDb);
+            this.showMessageForUpdateAfterClickedButton(product, view);
+        } else {
+            Product product = this.doValidationsAndReturnProduct();
+            product.setProductId(getArguments().getInt("productId"));
+            if(product.getProductCode().length() > 1){
+                this.showMessageForUpdateAfterClickedButton(product, view);
             }
+        }
+    }
+
+    private void showMessageForUpdateAfterClickedButton(Product product, View view){
+        if(this.productService.updateProduct(product)){
+            var action = AddProductFragmentDirections.actionAddProductFragmentToListOfProductFragment();
+            Navigation.findNavController(view).navigate(action);
+            Toast toast = Toast.makeText(requireContext(), "Ürün güncellendi.", Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
+            Toast.makeText(requireContext(), "Ürün güncellenirken hata oluştu.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private boolean checkEnteredProductCode(String productCode){
         return (!productCode.isBlank() && ProductUtil.isProductCodeValid(productCode));
+    }
+
+    private void fillEditTextsForUpdateProductFragment(){
+        int productId = getArguments().getInt("productId");
+        Product product = productService.getProductByProductId(productId);
+        this.productCodeFromDb = product.getProductCode();
+        binding.etProductCode.setText(productCodeFromDb);
+        binding.etProductPrice.setText(String.valueOf(product.getCurrentPrice()));
+        binding.etProductTax.setText(String.valueOf(product.getTax()));
+        binding.etProductInventoryDifference.setText(String.valueOf(product.getInventoryDifference()));
+        binding.cvLastProductInventoryDate.setDate(product.getLastProductInventoryDate());
+        binding.etProductName.setText(product.getProductName());
     }
 }
