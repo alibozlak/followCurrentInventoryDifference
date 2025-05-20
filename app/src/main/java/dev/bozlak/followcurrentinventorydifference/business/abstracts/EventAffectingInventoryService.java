@@ -9,4 +9,5 @@ public interface EventAffectingInventoryService {
     boolean addEventAffectingInventory(EventProductIdEventAmountAndDate eventProductIdEventAmountAndDate);
     int getLastEventId();
     List<EventForListOfEvents> getAllPositiveEvents();
+    List<EventForListOfEvents> getAllNegativeEvents();
 }

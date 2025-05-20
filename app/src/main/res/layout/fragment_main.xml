@@ -92,13 +92,22 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_listProducts" />
 
     <Button
+        android:id="@+id/btn_listOfNegativeEvents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Olumsuz Olayları Listele"
+        app:layout_constraintStart_toStartOf="@+id/btn_addProduct"
+        app:layout_constraintTop_toBottomOf="@+id/btn_listOfPositiveEvents" />
+
+    <Button
         android:id="@+id/btn_listGeneralInventoryDates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Genel Envanter Tarihlerini Listele"
         app:layout_constraintStart_toStartOf="@+id/btn_addProduct"
-        app:layout_constraintTop_toBottomOf="@+id/btn_listOfPositiveEvents" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_listOfNegativeEvents" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

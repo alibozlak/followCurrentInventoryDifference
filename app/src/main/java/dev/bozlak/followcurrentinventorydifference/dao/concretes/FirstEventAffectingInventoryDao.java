@@ -88,6 +88,19 @@ public class FirstEventAffectingInventoryDao implements EventAffectingInventoryD
     public List<EventIdProductIdEventAmountEventDate> getAllPositiveEventDtosGivenLastGeneralInventoryDate(
             long lastGeneralInventoryDate
     ) {
+        return this.getAllEventDtosGivenLastGeneralInventoryDate(lastGeneralInventoryDate, true);
+    }
+
+    @Override
+    public List<EventIdProductIdEventAmountEventDate> getAllNegativeEventDtosGivenLastGeneralInventoryDate(
+            long lastGeneralInventoryDate
+    ) {
+        return this.getAllEventDtosGivenLastGeneralInventoryDate(lastGeneralInventoryDate, false);
+    }
+
+    private List<EventIdProductIdEventAmountEventDate> getAllEventDtosGivenLastGeneralInventoryDate(
+            long lastGeneralInventoryDate, boolean isPositiveEvent
+    ){
         List<EventIdProductIdEventAmountEventDate> eventDtos = new ArrayList<>();
         String sqlForEventDtos = "SELECT "
                 + DbConstants.EVENT_ID_COLUMN_NAME + ", "
@@ -96,7 +109,12 @@ public class FirstEventAffectingInventoryDao implements EventAffectingInventoryD
                 + DbConstants.EVENT_DATE_AND_TIME_COLUMN_NAME + " FROM "
                 + DbConstants.EVENTS_AFFECTING_INVENTORY_TABLE_NAME + " WHERE "
                 + DbConstants.EVENT_DATE_AND_TIME_COLUMN_NAME + " >= " + lastGeneralInventoryDate + " AND "
-                + DbConstants.AMOUNT_COLUMN_NAME + " > 0;";
+                + DbConstants.AMOUNT_COLUMN_NAME;
+        if(isPositiveEvent){
+            sqlForEventDtos += " > 0;";
+        } else {
+            sqlForEventDtos += " < 0;";
+        }
         try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
             var cursor = db.rawQuery(sqlForEventDtos, null);
             if(cursor.getCount() > 0) {

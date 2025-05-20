@@ -1,6 +1,7 @@
 package dev.bozlak.followcurrentinventorydifference.business.concretes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.EventAffectingInventoryService;
@@ -60,12 +61,27 @@ public class FirstEventManager implements EventAffectingInventoryService {
 
     @Override
     public List<EventForListOfEvents> getAllPositiveEvents() {
-        List<EventForListOfEvents> positiveEvents = new ArrayList<>();
+        return this.getAllEvents(true);
+    }
+
+    @Override
+    public List<EventForListOfEvents> getAllNegativeEvents() {
+        return this.getAllEvents(false);
+    }
+
+    private List<EventForListOfEvents> getAllEvents(boolean isPositiveEvent){
+        List<EventForListOfEvents> events = new ArrayList<>();
         long lastGeneralInventoryDate = this.generalInventoryDateDao.getLastGeneralInventoryDate();
-        List<EventIdProductIdEventAmountEventDate> eventDtos =
-                this.eventAffectingInventoryDao.getAllPositiveEventDtosGivenLastGeneralInventoryDate(
-                        lastGeneralInventoryDate
-                );
+        List<EventIdProductIdEventAmountEventDate> eventDtos = null;
+        if(isPositiveEvent){
+            eventDtos = this.eventAffectingInventoryDao.getAllPositiveEventDtosGivenLastGeneralInventoryDate(
+                    lastGeneralInventoryDate
+            );
+        } else {
+            eventDtos = this.eventAffectingInventoryDao.getAllNegativeEventDtosGivenLastGeneralInventoryDate(
+                    lastGeneralInventoryDate
+            );
+        }
         for (EventIdProductIdEventAmountEventDate eventDto : eventDtos) {
             int eventId = eventDto.getEventId();
             String affectingType = this.affectingTypeDao.getAffectingTypeGivenEventId(eventId);
@@ -79,8 +95,8 @@ public class FirstEventManager implements EventAffectingInventoryService {
             eventForListOfEvents.setEventAmount(eventDto.getEventAmount());
             eventForListOfEvents.setEventDateAndTime(eventDto.getEventDate());
             eventForListOfEvents.setEventType(affectingType);
-            positiveEvents.add(eventForListOfEvents);
+            events.add(eventForListOfEvents);
         }
-        return positiveEvents;
+        return events;
     }
 }

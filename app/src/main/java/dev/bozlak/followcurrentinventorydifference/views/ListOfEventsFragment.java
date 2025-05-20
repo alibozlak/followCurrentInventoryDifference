@@ -50,7 +50,7 @@ public class ListOfEventsFragment extends Fragment {
         if(isEventNegative){
             tvHeader.setText("Son Genel Envanter Sonrası Mağazayı Olumsuz Etkileyen Olaylar");
             tvHeader.setTextColor(Color.RED);
-            //...
+            events = this.eventAffectingInventoryService.getAllNegativeEvents();
         } else {
             tvHeader.setText("Son Genel Envanter Sonrası Mağazayı Olumlu Etkileyen Olaylar");
             tvHeader.setTextColor(Color.GREEN);
