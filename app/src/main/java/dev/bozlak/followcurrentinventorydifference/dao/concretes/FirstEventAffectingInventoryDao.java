@@ -2,8 +2,13 @@ package dev.bozlak.followcurrentinventorydifference.dao.concretes;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import dev.bozlak.followcurrentinventorydifference.dao.DbConstants;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.EventAffectingInventoryDao;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.events.EventIdProductIdEventAmountEventDate;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.events.EventProductIdEventAmountAndDate;
 
 public class FirstEventAffectingInventoryDao implements EventAffectingInventoryDao {
@@ -77,5 +82,37 @@ public class FirstEventAffectingInventoryDao implements EventAffectingInventoryD
             System.out.println(e.getMessage());
         }
         return lastEventId;
+    }
+
+    @Override
+    public List<EventIdProductIdEventAmountEventDate> getAllPositiveEventDtosGivenLastGeneralInventoryDate(
+            long lastGeneralInventoryDate
+    ) {
+        List<EventIdProductIdEventAmountEventDate> eventDtos = new ArrayList<>();
+        String sqlForEventDtos = "SELECT "
+                + DbConstants.EVENT_ID_COLUMN_NAME + ", "
+                + DbConstants.PRODUCT_ID_COLUMN_NAME + ", "
+                + DbConstants.AMOUNT_COLUMN_NAME + ", "
+                + DbConstants.EVENT_DATE_AND_TIME_COLUMN_NAME + " FROM "
+                + DbConstants.EVENTS_AFFECTING_INVENTORY_TABLE_NAME + " WHERE "
+                + DbConstants.EVENT_DATE_AND_TIME_COLUMN_NAME + " >= " + lastGeneralInventoryDate + " AND "
+                + DbConstants.AMOUNT_COLUMN_NAME + " > 0;";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            var cursor = db.rawQuery(sqlForEventDtos, null);
+            if(cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    var eventDto = new EventIdProductIdEventAmountEventDate();
+                    eventDto.setEventId(cursor.getInt(0));
+                    eventDto.setProductId(cursor.getInt(1));
+                    eventDto.setEventAmount(cursor.getDouble(2));
+                    eventDto.setEventDate(cursor.getLong(3));
+                    eventDtos.add(eventDto);
+                }
+            }
+            cursor.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return eventDtos;
     }
 }

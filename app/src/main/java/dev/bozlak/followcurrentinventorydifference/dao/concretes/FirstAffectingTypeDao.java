@@ -35,4 +35,24 @@ public class FirstAffectingTypeDao implements AffectingTypeDao {
         }
         return result;
     }
+
+    @Override
+    public String getAffectingTypeGivenEventId(int eventId) {
+        String affectingType = "";
+        String sqlForAffectingType = "SELECT "
+                + DbConstants.AFFECTING_TYPE_COLUMN_NAME + " FROM "
+                + DbConstants.AFFECTING_TYPES_TABLE_NAME + " WHERE "
+                + DbConstants.EVENT_ID_COLUMN_NAME + " = " + eventId + ";";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            var cursor = db.rawQuery(sqlForAffectingType, null);
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                affectingType = cursor.getString(0);
+            }
+            cursor.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return affectingType;
+    }
 }

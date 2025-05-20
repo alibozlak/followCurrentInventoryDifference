@@ -19,4 +19,5 @@ public interface ProductDao {
     List<ProductIdCodeNameAndPrice> getAllProductIdCodeNameAndPrice();
     Product getProductByProductId(int productId);
     boolean updateProduct(Product product);
+    ProductCodeAndName getProductCodeAndNameByProductId(int productId);
 }

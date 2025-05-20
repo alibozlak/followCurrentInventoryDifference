@@ -25,6 +25,9 @@
         <action
             android:id="@+id/mainFragmentToListOfProductFragment"
             app:destination="@id/listOfProductFragment" />
+        <action
+            android:id="@+id/mainFragmentToListOfEventsFragment"
+            app:destination="@id/listOfEventsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addProductFragment"
@@ -75,5 +78,15 @@
         <action
             android:id="@+id/action_listOfProductFragmentToAddProductFragment"
             app:destination="@id/addProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listOfEventsFragment"
+        android:name="dev.bozlak.followcurrentinventorydifference.views.ListOfEventsFragment"
+        android:label="fragment_list_of_events"
+        tools:layout="@layout/fragment_list_of_events" >
+        <argument
+            android:name="isEventNegative"
+            app:argType="boolean"
+            android:defaultValue="true" />
     </fragment>
 </navigation>

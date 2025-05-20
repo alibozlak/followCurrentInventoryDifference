@@ -74,21 +74,31 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_addNegativeEventInMainFragment" />
 
     <Button
-        android:id="@+id/btn_listGeneralInventoryDates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Genel Envanter Tarihlerini Listele"
-        app:layout_constraintStart_toStartOf="@+id/btn_addProduct"
-        app:layout_constraintTop_toBottomOf="@+id/btn_addGeneralInventoryDate" />
-
-    <Button
         android:id="@+id/btn_listProducts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Ürünleri Listele"
         app:layout_constraintStart_toStartOf="@+id/btn_addProduct"
-        app:layout_constraintTop_toBottomOf="@+id/btn_listGeneralInventoryDates" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_addGeneralInventoryDate" />
+
+    <Button
+        android:id="@+id/btn_listOfPositiveEvents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Olumlu Olayları Listele"
+        app:layout_constraintStart_toStartOf="@+id/btn_addProduct"
+        app:layout_constraintTop_toBottomOf="@+id/btn_listProducts" />
+
+    <Button
+        android:id="@+id/btn_listGeneralInventoryDates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Genel Envanter Tarihlerini Listele"
+        app:layout_constraintStart_toStartOf="@+id/btn_addProduct"
+        app:layout_constraintTop_toBottomOf="@+id/btn_listOfPositiveEvents" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

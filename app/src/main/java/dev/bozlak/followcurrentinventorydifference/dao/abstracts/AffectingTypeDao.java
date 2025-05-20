@@ -4,4 +4,5 @@ import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.events.affect
 
 public interface AffectingTypeDao {
     boolean addAffectingTypeForEvent(EventIdAndAffectingType eventIdAndAffectingType);
+    String getAffectingTypeGivenEventId(int eventId);
 }

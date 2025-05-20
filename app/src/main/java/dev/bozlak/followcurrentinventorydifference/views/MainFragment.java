@@ -53,6 +53,9 @@ public class MainFragment extends Fragment {
         var btnAddNegativeEvent = binding.btnAddNegativeEventInMainFragment;
         btnAddNegativeEvent.setOnClickListener(this::navigateToAddNegativeEventFragment);
         btnAddNegativeEvent.setBackgroundColor(Color.RED);
+        var btnListOfPositiveEvents = binding.btnListOfPositiveEvents;
+        btnListOfPositiveEvents.setBackgroundColor(Color.GREEN);
+        btnListOfPositiveEvents.setOnClickListener(this::navigateToListOfPositiveEventsFragment);
     }
 
     @Override
@@ -87,6 +90,10 @@ public class MainFragment extends Fragment {
         this.navigateToAddEventFragment(view, true);
     }
 
+    private void navigateToListOfPositiveEventsFragment(View view){
+        this.navigateToListOfEventsFragment(view, false);
+    }
+
     private void navigateToAddNegativeEventFragment(View view){
         this.navigateToAddEventFragment(view, false);
     }
@@ -94,6 +101,12 @@ public class MainFragment extends Fragment {
     private void navigateToAddEventFragment(View view, boolean isEventPositive){
         var action = MainFragmentDirections.mainFragmentToAddPositiveEventFragment();
         action.setIsEventPositive(isEventPositive);
+        Navigation.findNavController(view).navigate(action);
+    }
+
+    private void navigateToListOfEventsFragment(View view, boolean isEventNegative){
+        var action = MainFragmentDirections.mainFragmentToListOfEventsFragment();
+        action.setIsEventNegative(isEventNegative);
         Navigation.findNavController(view).navigate(action);
     }
 }

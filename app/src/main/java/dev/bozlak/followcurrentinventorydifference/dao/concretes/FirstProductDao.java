@@ -251,5 +251,27 @@ public class FirstProductDao implements ProductDao {
         return result;
     }
 
+    @Override
+    public ProductCodeAndName getProductCodeAndNameByProductId(int productId) {
+        ProductCodeAndName productCodeAndName = new ProductCodeAndName();
+        String sqlForGetProductCodeAndNameByProductId = "SELECT "
+                + DbConstants.PRODUCT_CODE_COLUMN_NAME + ", "
+                + DbConstants.PRODUCT_NAME_COLUMN_NAME + " FROM "
+                + DbConstants.PRODUCTS_TABLE_NAME + " WHERE "
+                + DbConstants.PRODUCT_ID_COLUMN_NAME + " = " + productId + ";";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            var cursor = db.rawQuery(sqlForGetProductCodeAndNameByProductId, null);
+            if(cursor.getCount() > 0){
+                cursor.moveToFirst();
+                productCodeAndName.setProductCode(cursor.getString(0));
+                productCodeAndName.setProductName(cursor.getString(1));
+            }
+            cursor.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return productCodeAndName;
+    }
+
 
 }

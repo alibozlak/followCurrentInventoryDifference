@@ -32,7 +32,12 @@ public class ServiceContainer {
     );
 
     public static final EventAffectingInventoryService eventAffectingInventoryService =
-            FirstEventManager.getInstance(eventAffectingInventoryDao);
+            FirstEventManager.getInstance(
+                    eventAffectingInventoryDao,
+                    generalInventoryDateDao,
+                    affectingTypeDao,
+                    productDao
+            );
 
     public static final AffectingTypeService affectingTypeService =
             FirstAffectingTypeManager.getInstance(affectingTypeDao);
