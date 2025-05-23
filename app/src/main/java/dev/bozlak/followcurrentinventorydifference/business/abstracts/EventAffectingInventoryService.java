@@ -10,4 +10,5 @@ public interface EventAffectingInventoryService {
     int getLastEventId();
     List<EventForListOfEvents> getAllPositiveEvents();
     List<EventForListOfEvents> getAllNegativeEvents();
+    boolean deleteEventGivenEventId(int eventId);
 }

@@ -98,6 +98,21 @@ public class FirstEventAffectingInventoryDao implements EventAffectingInventoryD
         return this.getAllEventDtosGivenLastGeneralInventoryDate(lastGeneralInventoryDate, false);
     }
 
+    @Override
+    public boolean deleteEventGivenEventId(int eventId) {
+        boolean result = false;
+        String sqlForDeleteEvent = "DELETE FROM "
+                + DbConstants.EVENTS_AFFECTING_INVENTORY_TABLE_NAME + " WHERE "
+                + DbConstants.EVENT_ID_COLUMN_NAME + " = " + eventId + ";";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            db.execSQL(sqlForDeleteEvent);
+            result = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
     private List<EventIdProductIdEventAmountEventDate> getAllEventDtosGivenLastGeneralInventoryDate(
             long lastGeneralInventoryDate, boolean isPositiveEvent
     ){

@@ -69,6 +69,11 @@ public class FirstEventManager implements EventAffectingInventoryService {
         return this.getAllEvents(false);
     }
 
+    @Override
+    public boolean deleteEventGivenEventId(int eventId) {
+        return this.eventAffectingInventoryDao.deleteEventGivenEventId(eventId);
+    }
+
     private List<EventForListOfEvents> getAllEvents(boolean isPositiveEvent){
         List<EventForListOfEvents> events = new ArrayList<>();
         long lastGeneralInventoryDate = this.generalInventoryDateDao.getLastGeneralInventoryDate();

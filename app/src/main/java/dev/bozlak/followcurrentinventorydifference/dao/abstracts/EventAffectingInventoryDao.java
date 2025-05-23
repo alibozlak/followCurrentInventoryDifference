@@ -19,4 +19,6 @@ public interface EventAffectingInventoryDao {
     List<EventIdProductIdEventAmountEventDate> getAllNegativeEventDtosGivenLastGeneralInventoryDate(
             long lastGeneralInventoryDate
     );
+
+    boolean deleteEventGivenEventId(int eventId);
 }

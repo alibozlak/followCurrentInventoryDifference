@@ -4,4 +4,5 @@ import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.events.affect
 
 public interface AffectingTypeService {
     boolean addAffectingTypeForEvent(EventIdAndAffectingType eventIdAndAffectingType);
+    boolean deleteAffectingTypeGivenEventId(int eventId);
 }

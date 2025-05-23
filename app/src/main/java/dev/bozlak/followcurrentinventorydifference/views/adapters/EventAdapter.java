@@ -2,6 +2,7 @@ package dev.bozlak.followcurrentinventorydifference.views.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,11 +10,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.sql.Date;
 import java.util.List;
 
+import dev.bozlak.followcurrentinventorydifference.business.abstracts.AffectingTypeService;
+import dev.bozlak.followcurrentinventorydifference.business.abstracts.EventAffectingInventoryService;
 import dev.bozlak.followcurrentinventorydifference.databinding.RecyclerRowEventBinding;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.events.EventForListOfEvents;
+import dev.bozlak.followcurrentinventorydifference.views.ServiceContainer;
 
 public class EventAdapter  extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
     private final List<EventForListOfEvents> events;
+    private final AffectingTypeService affectingTypeService = ServiceContainer.affectingTypeService;
+    private final EventAffectingInventoryService eventAffectingInventoryService =
+            ServiceContainer.eventAffectingInventoryService;
 
     public EventAdapter(List<EventForListOfEvents> events) {
         this.events = events;
@@ -53,10 +60,31 @@ public class EventAdapter  extends RecyclerView.Adapter<EventAdapter.EventViewHo
         holder.binding.tvEventTypeValueInRecyclerRowEvent.setText(
                 this.events.get(position).getEventType()
         );
+
+        holder.binding.btnDeleteInRecyclerRowEvent.setOnClickListener(v -> {
+            int eventId = this.events.get(position).getEventId();
+            if(this.deleteEventGivenEventId(eventId, position)){
+                Toast.makeText(v.getContext(), "Olay silindi!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(v.getContext(), "Olay silme başarısız!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return this.events.size();
+    }
+
+    private boolean deleteEventGivenEventId(int eventId, int position){
+        if(this.affectingTypeService.deleteAffectingTypeGivenEventId(eventId)){
+            if(this.eventAffectingInventoryService.deleteEventGivenEventId(eventId)) {
+                this.events.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, this.events.size());
+                return true;
+            }
+        }
+        return false;
     }
 }

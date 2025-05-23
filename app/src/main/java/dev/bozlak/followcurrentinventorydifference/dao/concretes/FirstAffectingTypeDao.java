@@ -55,4 +55,19 @@ public class FirstAffectingTypeDao implements AffectingTypeDao {
         }
         return affectingType;
     }
+
+    @Override
+    public boolean deleteAffectingTypeGivenEventId(int eventId) {
+        boolean result = false;
+        String sqlForDeleteAffectingType = "DELETE FROM "
+                + DbConstants.AFFECTING_TYPES_TABLE_NAME + " WHERE "
+                + DbConstants.EVENT_ID_COLUMN_NAME + " = " + eventId + ";";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
+            db.execSQL(sqlForDeleteAffectingType);
+            result = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
 }

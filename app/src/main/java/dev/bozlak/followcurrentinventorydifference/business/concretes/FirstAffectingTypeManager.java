@@ -23,4 +23,9 @@ public class FirstAffectingTypeManager implements AffectingTypeService {
     public boolean addAffectingTypeForEvent(EventIdAndAffectingType eventIdAndAffectingType) {
         return this.affectingTypeDao.addAffectingTypeForEvent(eventIdAndAffectingType);
     }
+
+    @Override
+    public boolean deleteAffectingTypeGivenEventId(int eventId) {
+        return this.affectingTypeDao.deleteAffectingTypeGivenEventId(eventId);
+    }
 }
