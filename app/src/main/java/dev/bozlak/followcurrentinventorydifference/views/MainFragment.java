@@ -45,6 +45,7 @@ public class MainFragment extends Fragment {
         binding.tvSummaryDifferencePrice.setText(String.valueOf(summaryCurrentInventoryDifferencePrice));
         binding.btnAddProduct.setOnClickListener(this::navigateToAddProductFragment);
         binding.btnAddGeneralInventoryDate.setOnClickListener(this::navigateToAddGeneralInventoryDateFragment);
+        binding.btnAddGiroToSelectDate.setOnClickListener(this::navigateToAddGiroFragment);
         binding.btnListGeneralInventoryDates.setOnClickListener(this::navigateToListOfGeneralInventoryFragment);
         binding.btnListProducts.setOnClickListener(this::navigateToListOfProductFragment);
         Button btnAddPositiveEvent = binding.btnAddEventInMainFragment;
@@ -114,6 +115,11 @@ public class MainFragment extends Fragment {
     private void navigateToListOfEventsFragment(View view, boolean isEventNegative){
         var action = MainFragmentDirections.mainFragmentToListOfEventsFragment();
         action.setIsEventNegative(isEventNegative);
+        Navigation.findNavController(view).navigate(action);
+    }
+
+    private void navigateToAddGiroFragment(View view){
+        var action = MainFragmentDirections.actionMainFragmentToAddGiroFragment();
         Navigation.findNavController(view).navigate(action);
     }
 }

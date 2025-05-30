@@ -44,6 +44,7 @@
         android:ems="10"
         android:inputType="numberDecimal"
         android:layout_marginTop="16dp"
+        android:layout_marginLeft="5dp"
         android:hint="Ciro Miktarı"/>
 
     <Button

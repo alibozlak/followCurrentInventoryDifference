@@ -29,6 +29,10 @@ public final class DbConstants {
     public static final String AFFECTING_TYPES_TABLE_NAME = "affecting_types";
     public static final String AFFECTING_TYPE_ID_COLUMN_NAME = "affecting_type_id";
     public static final String AFFECTING_TYPE_COLUMN_NAME = "affecting_type";
+    public static final String GIRO_TABLE_NAME = "giros";
+    public static final String GIRO_ID_COLUMN_NAME = "giro_id";
+    public static final String GIRO_AMOUNT_COLUMN_NAME = "giro_amount";
+    public static final String GIRO_SELECTED_DATE_COLUMN_NAME = "giro_selected_date";
     public static final String[] NEGATIVE_EVENT_TYPES = {
             "SKT",
             "Bozuk/Hatalı Ürün",
