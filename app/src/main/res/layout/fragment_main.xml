@@ -74,13 +74,22 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_addNegativeEventInMainFragment" />
 
     <Button
+        android:id="@+id/btn_addGiroToSelectDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Ciro Ekle"
+        app:layout_constraintStart_toStartOf="@+id/btn_addProduct"
+        app:layout_constraintTop_toBottomOf="@+id/btn_addGeneralInventoryDate" />
+
+    <Button
         android:id="@+id/btn_listProducts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Ürünleri Listele"
         app:layout_constraintStart_toStartOf="@+id/btn_addProduct"
-        app:layout_constraintTop_toBottomOf="@+id/btn_addGeneralInventoryDate" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_addGiroToSelectDate" />
 
     <Button
         android:id="@+id/btn_listOfPositiveEvents"

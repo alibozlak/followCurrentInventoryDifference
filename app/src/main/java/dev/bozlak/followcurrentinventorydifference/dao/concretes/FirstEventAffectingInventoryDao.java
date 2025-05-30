@@ -126,10 +126,11 @@ public class FirstEventAffectingInventoryDao implements EventAffectingInventoryD
                 + DbConstants.EVENT_DATE_AND_TIME_COLUMN_NAME + " >= " + lastGeneralInventoryDate + " AND "
                 + DbConstants.AMOUNT_COLUMN_NAME;
         if(isPositiveEvent){
-            sqlForEventDtos += " > 0;";
+            sqlForEventDtos += " > 0";
         } else {
-            sqlForEventDtos += " < 0;";
+            sqlForEventDtos += " < 0";
         }
+        sqlForEventDtos += " ORDER BY " + DbConstants.EVENT_DATE_AND_TIME_COLUMN_NAME + " DESC;";
         try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)) {
             var cursor = db.rawQuery(sqlForEventDtos, null);
             if(cursor.getCount() > 0) {
