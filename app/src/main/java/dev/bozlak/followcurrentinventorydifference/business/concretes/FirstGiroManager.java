@@ -7,6 +7,7 @@ import dev.bozlak.followcurrentinventorydifference.dao.abstracts.GeneralInventor
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.GiroDao;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.giros.Giro;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.giros.GiroDateAndAmount;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.giros.GiroWithStartToEndDate;
 
 public class FirstGiroManager implements GiroService {
     private static FirstGiroManager firstGiroManager;
@@ -51,5 +52,21 @@ public class FirstGiroManager implements GiroService {
     public List<Giro> getAllGirosAfterLastGeneralInventoryDate() {
         long lastGeneralInventoryDate = generalInventoryDateDao.getLastGeneralInventoryDate();
         return this.giroDao.getAllGirosAfterLastGeneralInventoryDate(lastGeneralInventoryDate);
+    }
+
+    @Override
+    public GiroWithStartToEndDate getGiroWithStartToEndDate(int giroId) {
+        long lastGeneralInventoryDate = generalInventoryDateDao.getLastGeneralInventoryDate();
+        GiroWithStartToEndDate giroWithStartToEndDate = this.giroDao.getGiroWithStartToEndDate(giroId);
+        long giroStartDate = giroWithStartToEndDate.getStartDate();
+        if(giroStartDate < lastGeneralInventoryDate){
+            giroWithStartToEndDate.setStartDate(lastGeneralInventoryDate + 86_400_000);
+        }
+        return giroWithStartToEndDate;
+    }
+
+    @Override
+    public boolean updateGiroAmount(int giroId, double newGiroAmount) {
+        return this.giroDao.updateGiroAmount(giroId, newGiroAmount);
     }
 }

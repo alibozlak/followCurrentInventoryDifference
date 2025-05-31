@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.UpdateGiroAmountFragment"
+    android:orientation="vertical"
+    android:layout_margin="2dp">
+
+    <TextView
+        android:id="@+id/tv_fromDateInUpdateGiroAmountFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="fromDate"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_toDateInGiroAmountFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="toDate"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_amountInUpdateGiroAmountFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_labelForAmountInUpdateGiroFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ciro Miktarı : "
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_giroAmountInUpdateGiroFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_updateInUpdateGiroFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="50dp"
+        android:text="Güncelle"
+        android:textAlignment="center" />
+</LinearLayout>

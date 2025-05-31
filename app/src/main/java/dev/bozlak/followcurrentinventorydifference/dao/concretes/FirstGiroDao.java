@@ -9,6 +9,7 @@ import dev.bozlak.followcurrentinventorydifference.dao.DbConstants;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.GiroDao;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.giros.Giro;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.giros.GiroDateAndAmount;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.giros.GiroWithStartToEndDate;
 
 public class FirstGiroDao implements GiroDao {
     private static FirstGiroDao firstGiroDao;
@@ -103,4 +104,59 @@ public class FirstGiroDao implements GiroDao {
         }
         return giros;
     }
+
+    @Override
+    public GiroWithStartToEndDate getGiroWithStartToEndDate(int giroId) {
+        var giroWithStartToEndDate = new GiroWithStartToEndDate();
+        String sqlForGetGiro = "SELECT * FROM "
+                + DbConstants.GIRO_TABLE_NAME + " WHERE "
+                + DbConstants.GIRO_ID_COLUMN_NAME + " = " + giroId;
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)){
+            var cursor = db.rawQuery(sqlForGetGiro,null);
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                giroWithStartToEndDate.setGiroId(cursor.getInt(0));
+                giroWithStartToEndDate.setGiroAmount(cursor.getDouble(1));
+                giroWithStartToEndDate.setGiroDate(cursor.getLong(2));
+            }
+            cursor.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        String sqlForGetStartDate = "SELECT "
+                + DbConstants.GIRO_SELECTED_DATE_COLUMN_NAME
+                + " FROM " + DbConstants.GIRO_TABLE_NAME
+                + " WHERE " + DbConstants.GIRO_SELECTED_DATE_COLUMN_NAME
+                + " < " + giroWithStartToEndDate.getGiroDate()
+                + " ORDER BY " + DbConstants.GIRO_SELECTED_DATE_COLUMN_NAME
+                + " DESC LIMIT 1";
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)){
+            var cursor = db.rawQuery(sqlForGetStartDate,null);
+            if(cursor.getCount() > 0){
+                cursor.moveToFirst();
+                long startDate = cursor.getLong(0) + 86_400_000;
+                giroWithStartToEndDate.setStartDate(startDate);
+            }
+            cursor.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return giroWithStartToEndDate;
+    }
+
+    @Override
+    public boolean updateGiroAmount(int giroId, double newGiroAmount) {
+        boolean result = false;
+        String sqlForUpdateGiroAmount = "UPDATE " + DbConstants.GIRO_TABLE_NAME + " SET "
+                + DbConstants.GIRO_AMOUNT_COLUMN_NAME + " = " + newGiroAmount + " WHERE "
+                + DbConstants.GIRO_ID_COLUMN_NAME + " = " + giroId;
+        try (SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DbConstants.DB_PATH, null)){
+            db.execSQL(sqlForUpdateGiroAmount);
+            result = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
 }

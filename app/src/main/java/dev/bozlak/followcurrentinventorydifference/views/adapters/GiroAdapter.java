@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.sql.Date;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import dev.bozlak.followcurrentinventorydifference.databinding.RecyclerRowGiroBinding;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.giros.Giro;
+import dev.bozlak.followcurrentinventorydifference.views.ListOfGiroFragmentDirections;
 
 public class GiroAdapter extends RecyclerView.Adapter<GiroAdapter.GiroViewHolder> {
     private final List<Giro> giros;
@@ -43,6 +45,13 @@ public class GiroAdapter extends RecyclerView.Adapter<GiroAdapter.GiroViewHolder
         double giroAmount = this.giros.get(position).getGiroAmount();
         String tvGiroAmountString = giroAmount + " TL";
         holder.binding.tvAmountInRecyclerRowGiro.setText(tvGiroAmountString);
+
+        holder.binding.btnUpdateAmountInRecyclerRowGiro.setOnClickListener(view -> {
+            int giroId = this.giros.get(position).getGiroId();
+            var action = ListOfGiroFragmentDirections.actionListOfGiroFragmentToUpdateGiroAmountFragment();
+            action.setGiroId(giroId);
+            Navigation.findNavController(view).navigate(action);
+        });
     }
 
     @Override

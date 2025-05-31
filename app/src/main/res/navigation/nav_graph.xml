@@ -104,5 +104,22 @@
         android:id="@+id/listOfGiroFragment"
         android:name="dev.bozlak.followcurrentinventorydifference.views.ListOfGiroFragment"
         android:label="fragment_list_of_giro"
-        tools:layout="@layout/fragment_list_of_giro" />
+        tools:layout="@layout/fragment_list_of_giro" >
+        <action
+            android:id="@+id/actionListOfGiroFragmentToUpdateGiroAmountFragment"
+            app:destination="@id/updateGiroAmountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateGiroAmountFragment"
+        android:name="dev.bozlak.followcurrentinventorydifference.views.UpdateGiroAmountFragment"
+        android:label="fragment_update_giro_amount"
+        tools:layout="@layout/fragment_update_giro_amount" >
+        <action
+            android:id="@+id/actionUpdateGiroAmountFragmentToListOfGiroFragment"
+            app:destination="@id/listOfGiroFragment" />
+        <argument
+            android:name="giroId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>
