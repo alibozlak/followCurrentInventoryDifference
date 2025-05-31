@@ -8,4 +8,5 @@ public interface GeneralInventoryDateService {
     boolean addGeneralInventoryDate(long date);
     List<GeneralInventoryDate> getAllGeneralInventoryDates();
     boolean deleteGeneralInventoryDate(int generalInventoryId);
+    long getLastGeneralInventoryDate();
 }

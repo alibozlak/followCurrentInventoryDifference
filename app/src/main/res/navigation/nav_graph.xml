@@ -31,6 +31,9 @@
         <action
             android:id="@+id/actionMainFragmentToAddGiroFragment"
             app:destination="@id/addGiroFragment" />
+        <action
+            android:id="@+id/actionMainFragmentToListOfGiroFragment"
+            app:destination="@id/listOfGiroFragment" />
     </fragment>
     <fragment
         android:id="@+id/addProductFragment"
@@ -97,4 +100,9 @@
         android:name="dev.bozlak.followcurrentinventorydifference.views.AddGiroFragment"
         android:label="fragment_add_giro"
         tools:layout="@layout/fragment_add_giro" />
+    <fragment
+        android:id="@+id/listOfGiroFragment"
+        android:name="dev.bozlak.followcurrentinventorydifference.views.ListOfGiroFragment"
+        android:label="fragment_list_of_giro"
+        tools:layout="@layout/fragment_list_of_giro" />
 </navigation>

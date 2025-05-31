@@ -37,4 +37,9 @@ public class FirstGeneralInventoryDateManager implements GeneralInventoryDateSer
     public boolean deleteGeneralInventoryDate(int generalInventoryId) {
         return this.generalInventoryDateDao.deleteGeneralInventoryDate(generalInventoryId);
     }
+
+    @Override
+    public long getLastGeneralInventoryDate() {
+        return this.generalInventoryDateDao.getLastGeneralInventoryDate();
+    }
 }

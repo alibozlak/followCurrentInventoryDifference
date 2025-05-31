@@ -1,8 +1,11 @@
 package dev.bozlak.followcurrentinventorydifference.business.concretes;
 
+import java.util.List;
+
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.GiroService;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.GeneralInventoryDateDao;
 import dev.bozlak.followcurrentinventorydifference.dao.abstracts.GiroDao;
+import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.giros.Giro;
 import dev.bozlak.followcurrentinventorydifference.entitiesanddtos.giros.GiroDateAndAmount;
 
 public class FirstGiroManager implements GiroService {
@@ -36,5 +39,17 @@ public class FirstGiroManager implements GiroService {
     @Override
     public boolean addGiro(GiroDateAndAmount giroDateAndAmount) {
         return this.giroDao.addGiro(giroDateAndAmount);
+    }
+
+    @Override
+    public double getSumGiroAmountAfterLastGeneralInventoryDate() {
+        long lastGeneralInventoryDate = generalInventoryDateDao.getLastGeneralInventoryDate();
+        return this.giroDao.getSumGiroAmountAfterLastGeneralInventoryDate(lastGeneralInventoryDate);
+    }
+
+    @Override
+    public List<Giro> getAllGirosAfterLastGeneralInventoryDate() {
+        long lastGeneralInventoryDate = generalInventoryDateDao.getLastGeneralInventoryDate();
+        return this.giroDao.getAllGirosAfterLastGeneralInventoryDate(lastGeneralInventoryDate);
     }
 }

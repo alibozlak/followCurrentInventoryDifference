@@ -4,6 +4,8 @@ public class GiroDateAndAmount {
     private long giroDate;
     private double giroAmount;
 
+    public GiroDateAndAmount(){}
+
     public GiroDateAndAmount(long giroDate, double giroAmount){
         this.giroDate = giroDate;
         this.giroAmount = giroAmount;

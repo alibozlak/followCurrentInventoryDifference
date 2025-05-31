@@ -13,12 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import dev.bozlak.followcurrentinventorydifference.business.abstracts.GiroService;
 import dev.bozlak.followcurrentinventorydifference.business.abstracts.ProductService;
 import dev.bozlak.followcurrentinventorydifference.databinding.FragmentMainBinding;
 
 
 public class MainFragment extends Fragment {
     private final ProductService productService = ServiceContainer.productService;
+    private final GiroService giroService = ServiceContainer.giroService;
     private FragmentMainBinding binding;
 
     public MainFragment() {
@@ -43,6 +45,9 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         double summaryCurrentInventoryDifferencePrice = productService.getSummaryCurrentInventoryDifferencePrice();
         binding.tvSummaryDifferencePrice.setText(String.valueOf(summaryCurrentInventoryDifferencePrice));
+        double totalGiroAmount = giroService.getSumGiroAmountAfterLastGeneralInventoryDate();
+        binding.tvAmountGiroInMainFragment.setText(totalGiroAmount + " TL");
+        binding.btnDetailGiroInMainFragment.setOnClickListener(this::navigateToListOfGiroFragment);
         binding.btnAddProduct.setOnClickListener(this::navigateToAddProductFragment);
         binding.btnAddGeneralInventoryDate.setOnClickListener(this::navigateToAddGeneralInventoryDateFragment);
         binding.btnAddGiroToSelectDate.setOnClickListener(this::navigateToAddGiroFragment);
@@ -120,6 +125,11 @@ public class MainFragment extends Fragment {
 
     private void navigateToAddGiroFragment(View view){
         var action = MainFragmentDirections.actionMainFragmentToAddGiroFragment();
+        Navigation.findNavController(view).navigate(action);
+    }
+
+    private void navigateToListOfGiroFragment(View view){
+        var action = MainFragmentDirections.actionMainFragmentToListOfGiroFragment();
         Navigation.findNavController(view).navigate(action);
     }
 }

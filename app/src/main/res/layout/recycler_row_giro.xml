@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="3dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp">
+
+    <TextView
+        android:id="@+id/tv_toDateInRecyclerRowGiro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="toDate" />
+
+    <LinearLayout
+        android:id="@+id/ll_giroAmountInRecyclerRowGiro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp">
+
+        <TextView
+            android:id="@+id/tvAmountInRecyclerRowGiro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Amount"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_updateAmountInRecyclerRowGiro"
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Güncelle" />
+
+    </LinearLayout>
+</LinearLayout>
